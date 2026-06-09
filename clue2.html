@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>guihetta // terminal</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Terminal room styles */
+
+    body {
+      background: #010104;
+    }
+
+    /* CRT terminal frame */
+    #terminal-frame {
+      max-width: 740px;
+      margin: 0 auto;
+      background: #010306;
+      border: 1px solid #0a1a0a;
+      box-shadow: 0 0 40px rgba(0, 30, 0, 0.3);
+    }
+
+    /* Fake window title bar */
+    #term-bar {
+      background: #050f05;
+      border-bottom: 1px solid #0a1a0a;
+      padding: 5px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #term-bar span {
+      font-size: 0.65rem;
+      color: #1a3a1a;
+      letter-spacing: 0.15em;
+    }
+
+    /* Window control dots (decorative) */
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #1a2a1a;
+      flex-shrink: 0;
+    }
+
+    /* Scrollable terminal output area */
+    #output {
+      padding: 16px 16px 4px;
+      min-height: 340px;
+      max-height: 420px;
+      overflow-y: auto;
+      font-size: 0.78rem;
+      color: #44884a;
+      line-height: 1.65;
+      font-family: var(--mono);
+    }
+
+    /* Terminal output line colour variants */
+    .line-out { color: #3a7a40; }
+    .line-dim { color: #1e3e22; }
+    .line-err { color: #7a2020; }
+    .line-hi  { color: #88bb80; }   /* Highlighted: echoed commands */
+
+    /* Command input row */
+    #input-row {
+      display: flex;
+      align-items: center;
+      padding: 6px 16px 14px;
+      border-top: 1px solid #071207;
+    }
+
+    #prompt-label {
+      color: #2a5a2a;
+      font-size: 0.78rem;
+      margin-right: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    #cmd-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #1a3a1a;
+      color: #66aa66;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      outline: none;
+      flex: 1;
+      padding: 2px 4px;
+      letter-spacing: 0.08em;
+      caret-color: #44884a;
+      width: 100%;
+    }
+
+    /* Next-room link — hidden until puzzle solved */
+    #next-link {
+      display: none;
+      margin-top: 28px;
+    }
+
+    /* INTHA letter T — nearly invisible in terminal boot text */
+    #intha-t {
+      font-size: 8px;
+      color: #010304;
+      user-select: text;
+      display: inline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    CLUE 2 — THE TERMINAL
+    A CRT monitor on the bunker desk, still running.
+
+    Puzzle flow:
+      1. Player runs `ls`      → sees 3 visible files
+      2. Player runs `cat note.txt` → reads "encoding: caesar+13"
+      3. Player runs `ls -a`   → discovers hidden file `.echo`
+      4. Player runs `cat .echo` → sees "T : ABQR"
+      5. Player applies ROT13 to "ABQR" → gets "NODE"
+      6. Player submits NODE below → solved
+
+    INTHA letter T is embedded in the .echo file output.
+  -->
+
+  <div class="wrap">
+
+    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+
+    <h1>// terminal_02 //</h1>
+
+    <!-- Story text -->
+    <p>
+      the monitor is warm to the touch.<br>
+      it has been running for a very long time.<br>
+      a cursor blinks. <em>it is waiting.</em>
+    </p>
+
+    <!-- Terminal widget -->
+    <div id="terminal-frame">
+
+      <!-- Fake window title bar -->
+      <div id="term-bar">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span>node_07 — sh — 80×24</span>
+      </div>
+
+      <!-- Scrollable output area -->
+      <div id="output" aria-live="polite" aria-label="terminal output">
+        <div class="line-dim">last login: Thu Nov 21 03:11:44 UTC 2019</div>
+        <div class="line-dim">warning: 1 unread message in /var/mail/guheitta</div>
+        <div class="line-out">&nbsp;</div>
+        <div class="line-out">guheitta@node_07:~$
+          <span id="intha-t" aria-hidden="true">T</span>
+          type <strong>help</strong> for available commands.
+        </div>
+      </div><!-- /#output -->
+
+      <!-- Command input row -->
+      <div id="input-row">
+        <span id="prompt-label">guheitta@node_07:~$</span>
+        <input
+          id="cmd-input"
+          type="text"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          autofocus
+          aria-label="command input"
+          placeholder="type a command"
+        >
+      </div>
+
+    </div><!-- /#terminal-frame -->
+
+    <!-- Fragment submission section -->
+    <div style="margin-top: 36px;">
+      <h2>// submit decoded fragment //</h2>
+      <p>
+        the hidden file contains an encoded string.<br>
+        decode it. enter the result below.
+      </p>
+      <p><em>hint found in note.txt: "encoding: caesar+13"</em></p>
+
+      <div class="row" style="margin-top: 12px;">
+        <input type="text" id="frag-input" placeholder="decoded word" maxlength="20">
+        <button onclick="checkFragment()">submit</button>
+      </div>
+
+      <!-- Feedback messages -->
+      <div class="msg-err" id="err-msg">not quite. read the files more carefully.</div>
+      <div class="msg-ok"  id="ok-msg">correct. NODE. the signal persists.</div>
+
+      <!-- Fragment reward panel -->
+      <div class="fragment" id="frag-box">NODE</div>
+    </div>
+
+    <!-- Next room link — revealed on correct answer -->
+    <div id="next-link">
+      <p><em>among the files there is a reference. a forum. she was active there.</em></p>
+      <a class="btn" href="clue3.html">access the archive →</a>
+    </div>
+
+  </div><!-- /.wrap -->
+
+
+  <script>
+    // In-memory solved state — resets on every page load
+    let solved = false;
+
+    // --- Virtual filesystem ---
+    // Files the player can read with `cat`
+
+    const FS = {
+      'note.txt': [
+        '[ note.txt ]',
+        '─────────────────────────────────────',
+        'she was here.',
+        'she left this behind.',
+        '',
+        'i found this machine running in the dark.',
+        'everything she wrote is still here.',
+        'all of it.',
+        '',
+        'one file she kept hidden.',
+        'she mentioned it once, in passing:',
+        '"the echo knows the answer.',
+        ' encoding: caesar+13."',
+        '',
+        '— anonymous',
+        '─────────────────────────────────────',
+      ],
+      'log_final.txt': [
+        '[ log_final.txt ]',
+        '─────────────────────────────────────',
+        '2019-11-20 14:02:31 [SYS] boot sequence complete',
+        '2019-11-20 14:02:32 [SYS] network: connected',
+        '2019-11-21 03:11:44 [SYS] node_07: connection initialized',
+        '2019-11-21 03:11:49 [ERR] node_07: packet loss 100%',
+        '2019-11-21 03:11:51 [SYS] signal rerouted. destination: unknown.',
+        '2019-11-21 03:11:52 [SYS] session closed by remote host.',
+        '2019-11-22 00:00:00 [SYS] uptime: 24h. no operator present.',
+        '─────────────────────────────────────',
+      ],
+      'DONT_OPEN.exe': [
+        '[ DONT_OPEN.exe ]',
+        '─────────────────────────────────────',
+        'ELF binary. cannot display.',
+        '',
+        '...strings extracted:',
+        '"you opened it anyway."',
+        '"N found in sector 7."',
+        '"this file does nothing."',
+        '─────────────────────────────────────',
+      ],
+      // Hidden file — only visible with `ls -a`
+      // Contains ROT13-encoded answer: ABQR → NODE
+      // INTHA letter T is embedded here as the prefix
+      '.echo': [
+        '[ .echo ]',
+        '─────────────────────────────────────',
+        'T : ABQR',
+        '',
+        '─────────────────────────────────────',
+      ],
+    };
+
+    // Files visible without -a flag
+    const VISIBLE_FILES = ['note.txt', 'log_final.txt', 'DONT_OPEN.exe'];
+    // All files including hidden
+    const ALL_FILES     = [...VISIBLE_FILES, '.echo'];
+
+    const output   = document.getElementById('output');
+    const cmdInput = document.getElementById('cmd-input');
+    const history  = [];
+    let histIdx    = -1;
+
+    // Append a line of text to the terminal output area
+    function print(text, cls = 'line-out') {
+      const div = document.createElement('div');
+      div.className = cls;
+      div.textContent = text;
+      output.appendChild(div);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    // Echo the command the user typed (in highlight colour)
+    function echoCmd(cmd) {
+      const div = document.createElement('div');
+      div.className = 'line-hi';
+      div.textContent = `guheitta@node_07:~$ ${cmd}`;
+      output.appendChild(div);
+    }
+
+    // Process a command string and print the response
+    function runCommand(raw) {
+      const cmd = raw.trim();
+      if (!cmd) return;
+
+      history.unshift(cmd);
+      histIdx = -1;
+      echoCmd(cmd);
+
+      if (cmd === 'help') {
+        // List supported commands
+        print('available commands:');
+        print('  ls             list files');
+        print('  ls -a          list all files (including hidden)');
+        print('  cat [file]     read a file');
+        print('  whoami         who are you');
+        print('  date           system date');
+        print('  clear          clear terminal');
+
+      } else if (cmd === 'ls') {
+        // List visible files only
+        VISIBLE_FILES.forEach(f => print(f));
+
+      } else if (cmd === 'ls -a') {
+        // List all files including hidden (.echo)
+        ALL_FILES.forEach(f => print(f));
+
+      } else if (cmd.startsWith('cat ')) {
+        // Read and display a file
+        const fname = cmd.slice(4).trim();
+        if (FS[fname]) {
+          FS[fname].forEach(line => print(line, 'line-out'));
+        } else if (fname === '') {
+          print('cat: missing file operand', 'line-err');
+        } else {
+          print(`cat: ${fname}: no such file or directory`, 'line-err');
+        }
+
+      } else if (cmd === 'whoami') {
+        print('guheitta');
+
+      } else if (cmd === 'date') {
+        print('Thu Nov 21 03:11:52 UTC 2019');
+
+      } else if (cmd === 'clear') {
+        // Clear terminal output
+        output.innerHTML = '';
+
+      } else {
+        print(`sh: ${cmd}: command not found`, 'line-err');
+      }
+    }
+
+    // Handle Enter (run command) and arrow-key history navigation
+    cmdInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const val = cmdInput.value;
+        cmdInput.value = '';
+        runCommand(val);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (histIdx < history.length - 1) histIdx++;
+        cmdInput.value = history[histIdx] || '';
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (histIdx > 0) histIdx--;
+        else { histIdx = -1; cmdInput.value = ''; return; }
+        cmdInput.value = history[histIdx] || '';
+      }
+    });
+
+    // Click anywhere in terminal frame to refocus the input
+    document.getElementById('terminal-frame').addEventListener('click', () => {
+      cmdInput.focus();
+    });
+
+    // --- Fragment submission ---
+
+    const CORRECT_FRAG = 'NODE';
+
+    // Validate decoded fragment and unlock next room if correct
+    function checkFragment() {
+      const val = document.getElementById('frag-input').value.trim().toUpperCase();
+      const err = document.getElementById('err-msg');
+      const ok  = document.getElementById('ok-msg');
+      const box = document.getElementById('frag-box');
+
+      if (val === CORRECT_FRAG) {
+        showSolved();
+      } else {
+        show(err);
+        hide(ok);
+        box.classList.remove('show');
+      }
+    }
+
+    // Show success state and reveal next-room link
+    function showSolved() {
+      solved = true;
+      const err = document.getElementById('err-msg');
+      const ok  = document.getElementById('ok-msg');
+      const box = document.getElementById('frag-box');
+      hide(err);
+      show(ok);
+      box.classList.add('show');
+      document.getElementById('next-link').style.display = 'block';
+    }
+
+    function show(el) { el.classList.add('show'); }
+    function hide(el) { el.classList.remove('show'); }
+  </script>
+
+</body>
+</html>

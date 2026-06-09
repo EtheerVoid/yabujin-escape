@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>guihetta // bunker</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body { background: #060608; }
+
+    /* Bunker entrance photo */
+    #entrance-img {
+      display: block;
+      width: 100%;
+      max-width: 820px;
+      height: auto;
+      margin: 0 0 28px;
+      filter: brightness(0.72) contrast(1.1);
+    }
+
+    /* Bunker interior: photo with overlaid number marks */
+    #room {
+      position: relative;
+      width: 100%;
+      max-width: 820px;
+      margin: 0 0 28px;
+      display: block;
+      line-height: 0;
+    }
+
+    #room img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: brightness(0.65) contrast(1.15) saturate(0.4);
+    }
+
+    /* Graffiti-style numbers overlaid on photo */
+    /* Four code digits (1 6 1 6) and three decoys */
+    .mark {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: clamp(0.9rem, 2vw, 1.4rem);
+      color: rgba(160, 100, 80, 0.55);
+      user-select: none;
+      pointer-events: none;
+      text-shadow: 0 0 6px rgba(100, 40, 20, 0.4);
+    }
+
+    /* Positions as % of image — look natural on concrete walls */
+    #m-88   { top: 8%;  left: 6%;  font-size: clamp(1rem, 2.5vw, 2rem); color: rgba(100,80,60,0.35); }
+    #m-c1   { top: 5%;  left: 45%; }   /* code digit: 1 */
+    #m-c6a  { top: 50%; left: 3%;  }   /* code digit: 6 */
+    #m-44   { top: 14%; right: 4%; color: rgba(100,80,60,0.28); }
+    #m-c1b  { top: 72%; left: 58%; }   /* code digit: 1 */
+    #m-19   { top: 28%; left: 30%; color: rgba(100,80,60,0.22); font-size: 0.7rem; }
+    #m-c6b  { top: 84%; right: 16%;}   /* code digit: 6 */
+
+    /* Wall note — looks pinned to the concrete */
+    #wall-note {
+      position: absolute;
+      top: 18%; right: 6%;
+      width: clamp(100px, 18%, 150px);
+      background: rgba(10, 8, 12, 0.85);
+      border: 1px solid #251e2a;
+      padding: 8px 10px;
+      font-size: clamp(0.5rem, 1.2vw, 0.65rem);
+      color: #3a3048;
+      line-height: 1.7;
+      transform: rotate(2deg);
+      pointer-events: none;
+    }
+
+    /* Keypad widget */
+    #keypad-wrap { max-width: 340px; }
+
+    /* Keypad digit display */
+    #keypad-display {
+      background: #030306;
+      border: 1px solid var(--pale);
+      width: 116px;
+      padding: 7px 14px;
+      font-size: 1.3rem;
+      letter-spacing: 0.5em;
+      color: #553040;
+      display: inline-block;
+      margin-bottom: 12px;
+      min-height: 40px;
+    }
+
+    /* Keypad button grid */
+    #digit-btns {
+      display: grid;
+      grid-template-columns: repeat(4, 44px);
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+
+    #digit-btns button {
+      width: 44px; height: 44px;
+      padding: 0; font-size: 1rem;
+      letter-spacing: 0; margin: 0;
+    }
+
+    /* Next-room link — hidden until puzzle solved */
+    #next-link { display: none; margin-top: 24px; }
+
+    /* INTHA letter N — nearly invisible */
+    #intha-n {
+      position: absolute;
+      bottom: 2%; left: 42%;
+      font-size: 7px;
+      color: rgba(6,6,8,0.9);
+      user-select: text;
+      pointer-events: none;
+    }
+
+    /* Webcore visitor counter flavour */
+    .visitor-tag {
+      font-size: 0.6rem;
+      color: #1c1828;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+
+    <!-- Webcore flavour decoration -->
+    <p class="visitor-tag">░ visitors: 0000001 ░</p>
+
+    <h1>// bunker_01 //</h1>
+
+    <!-- Story text -->
+    <p>
+      she found it half-buried in the grass.<br>
+      concrete. heavy door, left open.<br>
+      the kind of place that was built to outlast everything else.
+    </p>
+
+    <!-- Bunker entrance photo -->
+    <img
+      id="entrance-img"
+      src="entrytobunker.jpg"
+      alt="concrete bunker exterior, entrance open, graffiti visible"
+    >
+
+    <!-- Story continues -->
+    <p>
+      inside was cold. the smell of rust and sand, a place long forgotten.<br>
+      walls covered in marks, she saw numbers, signs, things she didn't recognise.<br>
+      <em>at the far end, a door with a keypad. sealed.</em>
+    </p>
+
+    <!-- Bunker interior photo with overlaid number markings -->
+    <div id="room">
+
+      <img src="insidebunker.jpg" alt="dark bunker interior, broken concrete, narrow passage at back">
+
+      <!-- Decoy numbers (do not form the code) -->
+      <span class="mark" id="m-88">88</span>
+      <span class="mark" id="m-44">44</span>
+      <span class="mark" id="m-19">19</span>
+
+      <!-- Code digits: 1 6 1 6 -->
+      <span class="mark" id="m-c1">1</span>
+      <span class="mark" id="m-c6a">6</span>
+      <span class="mark" id="m-c1b">1</span>
+      <span class="mark" id="m-c6b">6</span>
+
+      <!-- Wall note providing the in-world hint about numbers -->
+      <div id="wall-note" aria-label="note on wall">
+        in <strong>AZEROY</strong>,<br>
+        numbers carry weight.<br><br>
+        1 and 6 => chaos.<br>
+        8 => number of <br>
+          luck and happiness.<br><br>
+        <em>— the Clue Man</em>
+      </div>
+
+      <!-- INTHA letter N -->
+      <span id="intha-n" aria-hidden="true">N</span>
+
+    </div><!-- /#room -->
+
+    <!-- Keypad puzzle -->
+    <div id="keypad-wrap">
+      <h2>// access panel //</h2>
+
+      <!-- Digit display showing current input -->
+      <div>
+        <div id="keypad-display" aria-live="polite">____</div>
+      </div>
+
+      <!-- Digit input buttons -->
+      <div id="digit-btns" role="group" aria-label="digit input">
+        <button onclick="typeDigit('1')">1</button>
+        <button onclick="typeDigit('2')">2</button>
+        <button onclick="typeDigit('3')">3</button>
+        <button onclick="typeDigit('4')">4</button>
+        <button onclick="typeDigit('5')">5</button>
+        <button onclick="typeDigit('6')">6</button>
+        <button onclick="typeDigit('7')">7</button>
+        <button onclick="typeDigit('8')">8</button>
+        <button onclick="typeDigit('9')">9</button>
+        <button onclick="typeDigit('0')">0</button>
+        <button onclick="clearInput()">clr</button>
+        <button onclick="checkCode()">↵</button>
+      </div>
+
+      <!-- Feedback messages -->
+      <div class="msg-err" id="err-msg">incorrect. the door does not open.</div>
+      <div class="msg-ok"  id="ok-msg">1616. chaos unlocked.</div>
+
+      <!-- Next room link — revealed on correct code -->
+      <div id="next-link">
+        <p><em>a corridor. at the end: a screen, still running.</em></p>
+        <a class="btn" href="clue2.html">approach the terminal →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // In-memory solved state — resets on every page load (no persistence)
+    let solved = false;
+
+    // Current digit input buffer
+    let code = '';
+
+    // Correct access code
+    const CORRECT = '1616';
+
+    const display = document.getElementById('keypad-display');
+
+    // --- Keypad input ---
+
+    // Append one digit to the buffer (max 4)
+    function typeDigit(d) {
+      if (code.length >= 4) return;
+      code += d;
+      display.textContent = code.padEnd(4, '_');
+    }
+
+    // Clear the digit buffer and reset display
+    function clearInput() {
+      code = '';
+      display.textContent = '____';
+      hide('err-msg');
+      hide('ok-msg');
+    }
+
+    // Validate the entered code and unlock if correct
+    function checkCode() {
+      if (code.length < 4) return;
+      if (code === CORRECT) {
+        showSolved();
+      } else {
+        show('err-msg');
+        hide('ok-msg');
+        code = '';
+        display.textContent = '____';
+      }
+    }
+
+    // Show success state and reveal next-room link
+    function showSolved() {
+      solved = true;
+      show('ok-msg');
+      hide('err-msg');
+      document.getElementById('next-link').style.display = 'block';
+    }
+
+    function show(id) { document.getElementById(id).classList.add('show'); }
+    function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+    // Keyboard input support
+    document.addEventListener('keydown', e => {
+      if (e.key >= '0' && e.key <= '9') typeDigit(e.key);
+      if (e.key === 'Enter')            checkCode();
+      if (e.key === 'Backspace')        clearInput();
+    });
+  </script>
+</body>
+</html>

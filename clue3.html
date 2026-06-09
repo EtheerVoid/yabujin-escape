@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>guihetta // archive</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Forum archive — circa 2003 phpBB dark mod aesthetic */
+
+    body {
+      background: #070609;
+    }
+
+    /* Outer forum chrome */
+    #forum-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #09080d;
+      border: 1px solid #151220;
+    }
+
+    /* Forum header bar */
+    #forum-header {
+      background: #0e0b16;
+      border-bottom: 1px solid #1a1626;
+      padding: 8px 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    #forum-header .title {
+      font-size: 0.7rem;
+      color: #5a5478;
+      letter-spacing: 0.2em;
+    }
+
+    #forum-header .breadcrumb {
+      font-size: 0.65rem;
+      color: #3e3a54;
+    }
+
+    /* Thread title row */
+    #thread-title {
+      border-bottom: 1px solid #111020;
+      padding: 10px 14px;
+      background: #0b091400;
+    }
+
+    #thread-title h2 {
+      color: #7a7098;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      margin: 0;
+    }
+
+    #thread-title .thread-meta {
+      font-size: 0.6rem;
+      color: #504868;
+      margin-top: 4px;
+    }
+
+    /* Post row: left=user info, right=post content */
+    .post {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      border-bottom: 1px solid #0e0c18;
+    }
+
+    /* Left column: user info */
+    .post-user {
+      background: #0c0a14;
+      padding: 14px 12px;
+      border-right: 1px solid #0e0c18;
+    }
+
+    .post-user .username {
+      font-size: 0.72rem;
+      color: #8878a8;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .post-user .user-info {
+      font-size: 0.6rem;
+      color: #504860;
+      line-height: 1.8;
+    }
+
+    /* Avatar: bordered square with symbol */
+    .post-user .avatar {
+      width: 60px;
+      height: 60px;
+      background: #0a0812;
+      border: 1px solid #151020;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #3a304a;
+    }
+
+    /* Right column: post content */
+    .post-body {
+      padding: 14px 16px;
+    }
+
+    .post-date {
+      font-size: 0.6rem;
+      color: #4a4460;
+      margin-bottom: 10px;
+    }
+
+    /* Post text — each sentence on its own line for the acrostic to be readable */
+    .post-text {
+      font-size: 0.78rem;
+      color: #9890b8;
+      line-height: 2;
+      max-width: 55ch;
+    }
+
+    .post-text p { margin: 0; }
+
+    /* Short/empty post style */
+    .post-empty .post-body {
+      padding: 10px 16px;
+      color: #1a1626;
+      font-size: 0.7rem;
+    }
+
+    /* Forum footer bar */
+    #forum-footer {
+      background: #0a0810;
+      border-top: 1px solid #121020;
+      padding: 8px 14px;
+      font-size: 0.6rem;
+      color: #1c1828;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* INTHA letter H — invisible in post number */
+    .intha-h {
+      color: #09080d;
+      user-select: text;
+      font-size: 8px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!--
+    CLUE 3 — THE FORUM ARCHIVE
+    A preserved phpBB-style thread from 2019.
+    Guihetta's last post contains an acrostic puzzle.
+
+    Puzzle: first letter of each of the 6 sentences in Guihetta's post
+    spells SIGNAL. Hint: "first letters speak."
+    Player types SIGNAL into the submit field.
+
+    INTHA letter H is hidden in the post number display.
+  -->
+
+  <div class="wrap">
+
+    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+
+    <h1>// archive_03 //</h1>
+
+    <!-- Story text -->
+    <p>
+      among the terminal files: a URL, partially intact.<br>
+      a cached copy of a forum thread. last activity: november 2019.<br>
+      <em>she was the last user to post.</em>
+    </p>
+
+    <!-- Forum widget -->
+    <div id="forum-wrap" role="article" aria-label="archived forum thread">
+
+      <!-- Forum header bar -->
+      <div id="forum-header">
+        <span class="title">NODE_ARCHIVE // subforum: signals &amp; persistence</span>
+        <span class="breadcrumb">cached 2019-11-22 // read-only</span>
+      </div>
+
+      <!-- Thread title row -->
+      <div id="thread-title">
+        <h2>:: last broadcast ::</h2>
+        <div class="thread-meta">
+          started by guheitta_08 · 4 replies · last post: 2019-11-22 03:11
+        </div>
+      </div>
+
+      <!-- Post 1: OP (atmospheric setup) -->
+      <div class="post">
+        <div class="post-user">
+          <div class="avatar">⟁</div>
+          <span class="username">void_relay</span>
+          <div class="user-info">
+            posts: 1,402<br>
+            joined: 2014<br>
+            status: <em>offline</em>
+          </div>
+        </div>
+        <div class="post-body">
+          <!-- INTHA letter H hidden in post number -->
+          <div class="post-date">2019-11-20 · post #<span class="intha-h" aria-hidden="true">H</span>1188</div>
+          <div class="post-text">
+            <p>has anyone been monitoring frequency 40.0 lately.</p>
+            <p>something keeps appearing on the sweep. can't identify the source.</p>
+            <p>been going on for about a week. not random.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 2: Brief reply (atmospheric) -->
+      <div class="post post-empty">
+        <div class="post-user">
+          <div class="avatar">∅</div>
+          <span class="username">sk1pjack</span>
+          <div class="user-info">posts: 88<br>joined: 2017</div>
+        </div>
+        <div class="post-body">
+          <span>probably interference from the towers. ignore it.</span>
+        </div>
+      </div>
+
+      <!-- Post 3: Brief reply (atmospheric) -->
+      <div class="post post-empty">
+        <div class="post-user">
+          <div class="avatar">◈</div>
+          <span class="username">anon_wire</span>
+          <div class="user-info">posts: 313<br>joined: 2016</div>
+        </div>
+        <div class="post-body">
+          <span>i've been noticing it too. mostly at 3am.</span>
+        </div>
+      </div>
+
+      <!-- Guihetta's post — THE ACROSTIC PUZZLE
+           First letter of each sentence: S I G N A L
+           Player must notice the pattern and submit SIGNAL -->
+      <div class="post">
+        <div class="post-user">
+          <div class="avatar">♦</div>
+          <span class="username">guheitta_08</span>
+          <div class="user-info">
+            posts: 7<br>
+            joined: 2019<br>
+            status: <em>unknown</em>
+          </div>
+        </div>
+        <div class="post-body">
+          <div class="post-date">2019-11-22 03:11 · post #2049 · <em>last post in thread</em></div>
+
+          <!-- Moderator note hinting at unusual structure -->
+          <div style="font-size:0.6rem; color:#1e1c28; margin-bottom:10px;">
+            [note: this post was flagged. reason: "unusual structure." — moderator log]
+          </div>
+
+          <!-- Acrostic: first letters spell S-I-G-N-A-L -->
+          <div class="post-text" aria-label="guihetta's post — first letters speak">
+            <p><strong>S</strong>he found the signal near the old tower at the edge of the field.</p>
+            <p><strong>I</strong> wrote the coordinates down before the battery died.</p>
+            <p><strong>G</strong>uihetta, they called her — nobody knew she had been listening for years.</p>
+            <p><strong>N</strong>obody came when she broadcast. nobody ever comes.</p>
+            <p><strong>A</strong> gate appeared in the static at exactly 40.0 megahertz.</p>
+            <p><strong>L</strong>eaving was not an option. leaving was the only option.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final empty post: connection-lost flavour -->
+      <div class="post post-empty">
+        <div class="post-user">
+          <div class="avatar">⬚</div>
+          <span class="username">[deleted]</span>
+          <div class="user-info">posts: —</div>
+        </div>
+        <div class="post-body">
+          <span style="color:#151220;">.</span>
+        </div>
+      </div>
+
+      <!-- Forum footer -->
+      <div id="forum-footer">
+        <span>NODE_ARCHIVE v3.1.4 · phpBB Group</span>
+        <span>time: 0.038s · queries: 14</span>
+      </div>
+
+    </div><!-- /#forum-wrap -->
+
+    <!-- Fragment submission section -->
+    <div style="margin-top: 40px;">
+      <h2>// what did she hide in this post? //</h2>
+      <p>
+        the moderator noticed something unusual about the structure.<br>
+        <em>first letters speak.</em>
+      </p>
+
+      <div class="row" style="margin-top: 14px;">
+        <input type="text" id="frag-input" placeholder="the hidden word" maxlength="20">
+        <button onclick="checkFragment()">submit</button>
+      </div>
+
+      <!-- Feedback messages -->
+      <div class="msg-err" id="err-msg">not yet. read her post again. carefully.</div>
+      <div class="msg-ok"  id="ok-msg">SIGNAL. she was transmitting all along.</div>
+
+      <!-- Fragment reward panel -->
+      <div class="fragment" id="frag-box">SIGNAL</div>
+    </div>
+
+    <!-- Next room link — revealed on correct answer -->
+    <div id="next-link" style="display:none; margin-top: 28px;">
+      <p><em>she mentioned a gate. a way out of the bunker. it leads somewhere else entirely.</em></p>
+      <a class="btn" href="clue4.html">find the exit →</a>
+    </div>
+
+  </div><!-- /.wrap -->
+
+
+  <script>
+    // In-memory solved state — resets on every page load
+    let solved = false;
+
+    const CORRECT = 'SIGNAL';
+
+    // Validate acrostic answer and unlock next room if correct
+    function checkFragment() {
+      const val = document.getElementById('frag-input').value.trim().toUpperCase();
+      const err = document.getElementById('err-msg');
+      const ok  = document.getElementById('ok-msg');
+      const box = document.getElementById('frag-box');
+
+      if (val === CORRECT) {
+        showSolved();
+      } else {
+        show(err);
+        hide(ok);
+        box.classList.remove('show');
+      }
+    }
+
+    // Show success state and reveal next-room link
+    function showSolved() {
+      solved = true;
+      hide(document.getElementById('err-msg'));
+      show(document.getElementById('ok-msg'));
+      document.getElementById('frag-box').classList.add('show');
+      document.getElementById('next-link').style.display = 'block';
+    }
+
+    function show(el) { el.classList.add('show'); }
+    function hide(el) { el.classList.remove('show'); }
+  </script>
+
+</body>
+</html>

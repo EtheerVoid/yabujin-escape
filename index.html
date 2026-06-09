@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>guihetta // field</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Index page: field image fills viewport top, overlays sit above it */
+
+    body {
+      overflow-x: hidden;
+    }
+
+    /* Container for field image and all overlays */
+    #field {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+
+    #field-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Decorative overlays — pointer-events:none so image map handles clicks */
+    .overlay {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    /* Pulsing ring over the bunker entrance (the clickable area) */
+    #o-entrance {
+      left: 53%;
+      top:  68%;
+      width:  7%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(160, 0, 30, 0.55);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(160, 0, 30, 0.25);
+      animation: pulse-ring 2.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.3; transform: scale(1);    }
+      50%       { opacity: 0.9; transform: scale(1.07); }
+    }
+
+    /* Small cross overlay near center-right */
+    #o-cross {
+      right: 24%;
+      top:   38%;
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Signal frequency lines over mountains */
+    #o-signal {
+      right: 10%;
+      top:   12%;
+      width: 120px;
+      height: 60px;
+      opacity: 0.28;
+    }
+
+    /* Eye symbol near upper-right angel face */
+    #o-eye {
+      right: 4%;
+      top:   15%;
+      width: 38px;
+      height: 22px;
+      opacity: 0.40;
+    }
+
+    /* INTHA letter I — nearly invisible, selectable by text highlight */
+    #intha-i {
+      position: absolute;
+      bottom: 3px;
+      left:   8px;
+      font-size: 9px;
+      color: #060610;
+      pointer-events: none;
+      user-select: text;
+      letter-spacing: 0.1em;
+    }
+
+    /* Intro text below image */
+    #intro {
+      text-align: center;
+      padding: 36px 20px 60px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    #intro h1 {
+      border: none;
+      padding: 0;
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.5em;
+      margin-bottom: 18px;
+      color: #5a5a78;
+    }
+
+    #intro p {
+      max-width: 100%;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 2;
+    }
+
+    #intro p strong {
+      color: var(--text);
+    }
+
+    /* Toast popup for dead-end clicks */
+    #popup {
+      position: fixed;
+      bottom: 32px;
+      left:   50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      border: 1px solid var(--pale);
+      color: var(--text);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      padding: 10px 22px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 100;
+      max-width: 400px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    #popup.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Field scene: image map coords authored for 4000x3000 natural size,
+       scaled to rendered size by JS below -->
+  <div id="field">
+
+    <img
+      id="field-img"
+      src="index.jpg"
+      alt="an open field. guihetta is here."
+      usemap="#field-map"
+    >
+
+    <!-- Clickable zones via image map -->
+    <map name="field-map" id="field-map">
+
+      <!-- Bunker entrance — only zone that advances the story -->
+      <area
+        id="area-bunker"
+        href="clue1.html"
+        shape="circle"
+        coords="2300, 2150, 360"
+        alt="something in the grass"
+        title="something in the grass"
+      >
+
+      <!-- Dead-end: angel sketch upper-right -->
+      <area
+        class="dead-end"
+        href="#"
+        shape="rect"
+        coords="3550, 60, 4000, 1380"
+        data-msg="watching. always watching."
+        alt="a face"
+        title="a face"
+      >
+
+      <!-- Dead-end: blue fractal upper-left -->
+      <area
+        class="dead-end"
+        href="#"
+        shape="rect"
+        coords="180, 60, 1780, 1380"
+        data-msg="signal detected. signal lost."
+        alt="static"
+        title="static"
+      >
+
+      <!-- Dead-end: figure lower-left -->
+      <area
+        class="dead-end"
+        href="#"
+        shape="rect"
+        coords="0, 1400, 420, 3000"
+        data-msg="she recognized herself. she did not."
+        alt="a figure"
+        title="a figure"
+      >
+
+      <!-- Dead-end: military debris left of center -->
+      <area
+        class="dead-end"
+        href="#"
+        shape="rect"
+        coords="900, 2000, 1820, 2700"
+        data-msg="something broken. no name on the tags."
+        alt="debris"
+        title="debris"
+      >
+
+    </map>
+
+    <!-- Decorative SVG overlays — pointer-events: none throughout -->
+
+    <!-- Pulsing ring over bunker entrance -->
+    <div id="o-entrance" class="overlay"></div>
+
+    <!-- Cross symbol -->
+    <svg id="o-cross" class="overlay" viewBox="0 0 28 28" fill="none"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="14" y1="2"  x2="14" y2="26" stroke="rgba(180,160,180,0.35)" stroke-width="1"/>
+      <line x1="2"  y1="14" x2="26" y2="14" stroke="rgba(180,160,180,0.35)" stroke-width="1"/>
+    </svg>
+
+    <!-- Frequency / signal lines -->
+    <svg id="o-signal" class="overlay" viewBox="0 0 120 60"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polyline points="0,30 10,30 15,10 20,50 25,20 30,40 35,30 120,30"
+                stroke="rgba(100,180,200,0.5)" stroke-width="1" fill="none"/>
+    </svg>
+
+    <!-- Eye outline -->
+    <svg id="o-eye" class="overlay" viewBox="0 0 38 22"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="19" cy="11" rx="17" ry="9"
+               stroke="rgba(180,150,150,0.45)" stroke-width="1" fill="none"/>
+      <circle  cx="19" cy="11" r="3.5"
+               stroke="rgba(180,150,150,0.45)" stroke-width="1" fill="none"/>
+    </svg>
+
+    <!-- INTHA letter I — barely visible, selectable -->
+    <span id="intha-i" aria-hidden="true">I</span>
+
+  </div><!-- /#field -->
+
+  <!-- Intro narrative text -->
+  <div id="intro">
+    <h1>// field_00 //</h1>
+    <p>
+      guihetta opens her eyes.<br>
+      the field is cold. she does not know where she is.<br>
+      she does not know who she is.
+    </p>
+    <p>
+      <em>something in the grass is waiting to be found.</em>
+    </p>
+  </div>
+
+  <!-- Toast popup for dead-end area clicks -->
+  <div id="popup"></div>
+
+  <script>
+    // Clear any leftover progress from a previous session on every fresh load
+    localStorage.clear();
+
+    // --- Image map coordinate scaler ---
+    // Coords authored for natural image size (4000x3000).
+    // Scales proportionally to actual rendered size.
+    const img   = document.getElementById('field-img');
+    const map   = document.getElementById('field-map');
+    const areas = Array.from(map.querySelectorAll('area'));
+
+    // Store original coords before any scaling
+    areas.forEach(a => {
+      a.dataset.origCoords = a.getAttribute('coords');
+    });
+
+    function scaleMap() {
+      const naturalW  = img.naturalWidth  || 4000;
+      const naturalH  = img.naturalHeight || 3000;
+      const renderedW = img.offsetWidth;
+      const renderedH = img.offsetHeight;
+      const sx = renderedW / naturalW;
+      const sy = renderedH / naturalH;
+
+      areas.forEach(a => {
+        const orig   = a.dataset.origCoords.split(',').map(Number);
+        const scaled = orig.map((v, i) => Math.round(i % 2 === 0 ? v * sx : v * sy));
+        a.setAttribute('coords', scaled.join(','));
+      });
+    }
+
+    img.addEventListener('load', scaleMap);
+    window.addEventListener('resize', scaleMap);
+    if (img.complete) scaleMap();
+
+    // --- Dead-end area popups ---
+    // Show flavour text instead of navigating
+    const popup  = document.getElementById('popup');
+    let popTimer = null;
+
+    document.querySelectorAll('area.dead-end').forEach(area => {
+      area.addEventListener('click', e => {
+        e.preventDefault();
+        const msg = area.dataset.msg || '...';
+        popup.textContent = msg;
+        popup.classList.add('show');
+        clearTimeout(popTimer);
+        popTimer = setTimeout(() => popup.classList.remove('show'), 2400);
+      });
+    });
+  </script>
+
+</body>
+</html>
