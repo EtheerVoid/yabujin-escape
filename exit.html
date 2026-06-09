@@ -198,9 +198,12 @@
 
     <!-- Story text -->
     <p>
-      she left five things behind.<br>
-      a node. a signal. a name. a garden. a return.<br>
-      enter them here.
+      she left five things.<br>
+      she didn't leave them for you.<br>
+      they're what remained when she was done.
+    </p>
+    <p>
+      <em>a node. a signal. a name. a garden. a return.</em>
     </p>
     <span id="hint-dot" title="five shadows crossed this room"></span>
 
@@ -233,13 +236,24 @@
 
       <p>
         she did not disappear.<br>
-        disappearing implies something to disappear from.
+        disappearing requires something to disappear from.
       </p>
 
       <p>
-        you followed her path.<br>
-        you read her words. you heard the broadcast.<br>
-        <strong>you are not the same as when you started.</strong>
+        she stopped needing what she needed.<br>
+        that's all.
+      </p>
+
+      <p>
+        you followed where she walked.<br>
+        you assembled what she left.<br>
+        you made meaning from residue — because that's what minds do.
+      </p>
+
+      <p>
+        now you're standing at the door she stood at.<br><br>
+        <strong>consider: you moved through everything.<br>
+        did you think — or did you complete?</strong>
       </p>
 
       <div class="end-line">
@@ -258,9 +272,36 @@
     <div class="easter-title">// you found the fifth shadow //</div>
 
     <p>
-      guihetta whispered it at the end.<br>
-      not a name. not a word.<br>
-      a frequency.
+      most people complete.<br>
+      they follow, they solve, they arrive.<br>
+      they don't read — they move through.
+    </p>
+
+    <p>
+      you read.<br>
+      you noticed something no one told you to notice.<br>
+      you looked sideways at something everyone else walked through.
+    </p>
+
+    <p>
+      that's what INTHA means.<br>
+      not transformation. not transcendence.<br>
+      the choice to actually see.
+    </p>
+
+    <p>
+      guihetta stopped needing azeroy.<br>
+      you stopped needing the path.
+    </p>
+
+    <p>
+      you are not the same person who opened their eyes in the field.<br>
+      neither was she.
+    </p>
+
+    <p>
+      you don't need to know what comes next.<br>
+      you already did the thing.
     </p>
 
     <!-- YABUJIN — CHALICE OF MIND
@@ -328,8 +369,8 @@
     // Reveal epilogue and intensify background images
     function showEpilogue() {
       solved = true;
+      sessionStorage.setItem('sx', '1');
       hide('err-msg');
-      // Mark all inputs correct
       Object.keys(ANSWERS).forEach(id => document.getElementById(id).classList.add('ok'));
       document.getElementById('epilogue').style.display = 'block';
       document.body.classList.add('revealed');
@@ -337,6 +378,11 @@
 
     function show(id) { document.getElementById(id).classList.add('show'); }
     function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+    if (sessionStorage.getItem('sx')) {
+      Object.entries(ANSWERS).forEach(([id, val]) => { document.getElementById(id).value = val; });
+      showEpilogue();
+    }
 
     // --- INTHA easter egg ---
     // Player types the letters I-N-T-H-A on keyboard to trigger hidden ending

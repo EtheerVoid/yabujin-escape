@@ -137,9 +137,9 @@
 
     <!-- Story text -->
     <p>
-      the monitor is warm to the touch.<br>
-      it has been running for a very long time.<br>
-      a cursor blinks. <em>it is waiting.</em>
+      the monitor is warm.<br>
+      it has been running since she left.<br>
+      the cursor still blinks. <em>it doesn't know she's gone.</em>
     </p>
 
     <!-- Terminal widget -->
@@ -181,12 +181,12 @@
 
     <!-- Fragment submission section -->
     <div style="margin-top: 36px;">
-      <h2>// submit decoded fragment //</h2>
+      <h2>// decoded //</h2>
       <p>
-        the hidden file contains an encoded string.<br>
-        decode it. enter the result below.
+        a hidden file. something encoded inside.<br>
+        she didn't leave it for you.<br>
+        <em>but here you are.</em>
       </p>
-      <p><em>hint found in note.txt: "encoding: caesar+13"</em></p>
 
       <div class="row" style="margin-top: 12px;">
         <input type="text" id="frag-input" placeholder="decoded word" maxlength="20">
@@ -203,7 +203,7 @@
 
     <!-- Next room link — revealed on correct answer -->
     <div id="next-link">
-      <p><em>among the files there is a reference. a forum. she was active there.</em></p>
+      <p><em>among the files: a URL, partially intact. a forum. last activity: november 2019.</em></p>
       <a class="btn" href="clue3.html">access the archive →</a>
     </div>
 
@@ -397,6 +397,7 @@
     // Show success state and reveal next-room link
     function showSolved() {
       solved = true;
+      sessionStorage.setItem('s2', '1');
       const err = document.getElementById('err-msg');
       const ok  = document.getElementById('ok-msg');
       const box = document.getElementById('frag-box');
@@ -408,6 +409,8 @@
 
     function show(el) { el.classList.add('show'); }
     function hide(el) { el.classList.remove('show'); }
+
+    if (sessionStorage.getItem('s2')) showSolved();
   </script>
 
 </body>

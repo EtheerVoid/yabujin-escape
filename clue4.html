@@ -9,7 +9,6 @@
   <style>
     body { background: #030208; }
 
-    /* Panoramic AZEROY desert scene */
     #azeroy-scene {
       width: 100%;
       max-width: 820px;
@@ -25,23 +24,21 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      filter: brightness(0.7) contrast(1.1) saturate(0.8) hue-rotate(200deg);
+      filter: brightness(0.58) contrast(1.25) saturate(0.38) hue-rotate(210deg);
     }
 
-    /* Decorative symbol overlays on the scene image */
     .sym {
       position: absolute;
       font-family: var(--mono);
-      color: rgba(150, 180, 255, 0.22);
+      color: rgba(150, 180, 255, 0.18);
       pointer-events: none;
       user-select: none;
     }
     #s1 { top: 8%;  left: 6%;  font-size: 2rem; }
     #s2 { top: 15%; right: 7%; font-size: 0.85rem; letter-spacing: 0.4em; }
     #s3 { top: 60%; left: 42%; font-size: 0.7rem; letter-spacing: 0.5em; }
-    #s4 { top: 75%; left: 5%;  font-size: 2.5rem; opacity: 0.1; }
+    #s4 { top: 75%; left: 5%;  font-size: 2.5rem; opacity: 0.08; }
 
-    /* Gate shape overlaid on the image */
     #gate {
       position: absolute;
       bottom: 0;
@@ -49,27 +46,38 @@
       transform: translateX(-50%);
       width: 11%;
       height: 48%;
-      background: rgba(0, 0, 5, 0.88);
-      border: 1px solid rgba(100, 140, 220, 0.25);
+      background: rgba(0, 0, 5, 0.93);
+      border: 1px solid rgba(100, 140, 220, 0.28);
       border-bottom: none;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
+      box-shadow: 0 0 30px rgba(70, 90, 210, 0.1),
+                  inset 0 0 20px rgba(50, 70, 190, 0.05);
     }
 
-    /* Caesar cipher text on the gate */
-    #gate-cipher {
-      font-size: clamp(0.5rem, 1.4vw, 0.8rem);
-      color: rgba(140, 170, 255, 0.65);
-      letter-spacing: 0.25em;
+    #gate-glyphs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .glyph {
+      font-size: clamp(0.55rem, 1.8vw, 1rem);
+      color: rgba(140, 165, 255, 0.75);
+      text-shadow: 0 0 6px rgba(130, 160, 255, 0.45);
+      line-height: 1;
     }
 
     #gate-label {
-      font-size: clamp(0.38rem, 0.9vw, 0.52rem);
-      color: rgba(80, 100, 160, 0.5);
-      letter-spacing: 0.2em;
+      font-size: clamp(0.28rem, 0.7vw, 0.42rem);
+      color: rgba(80, 100, 160, 0.45);
+      letter-spacing: 0.15em;
+      text-align: center;
+      padding: 0 4px;
     }
 
     /* INTHA letter H — nearly invisible */
@@ -82,117 +90,75 @@
       pointer-events: none;
     }
 
-    /* In-world hint box */
-    .hint-box {
-      border: 1px solid #16102a;
-      background: #07050e;
-      padding: 14px 18px;
-      margin: 20px 0;
-      font-size: 0.78rem;
-      color: #7a6e98;
-      max-width: 540px;
-      line-height: 1.8;
-    }
-    .hint-box strong { color: #9a8ec0; }
+    .status-tag { font-size: 0.6rem; color: #1c1828; letter-spacing: 0.1em; margin-bottom: 6px; }
 
-    /* Large display of the cipher text */
-    .cipher-display {
-      font-size: 1.3rem;
-      letter-spacing: 0.5em;
-      color: rgba(140, 170, 255, 0.65);
-      margin: 16px 0 8px;
-    }
-
-    /* Next-room link — hidden until puzzle solved */
     #next-link { display: none; margin-top: 24px; }
-
-    .status-tag {
-      font-size: 0.6rem; color: #1c1828;
-      letter-spacing: 0.1em; margin-bottom: 6px;
-    }
   </style>
 </head>
 
 <body>
-  <!--
-    CLUE 4 — AZEROY
-    A Caesar cipher puzzle. Letters on the gate are shifted +1.
-    Shift back to decode BAFSPZ → AZEROY.
-    Player submits AZEROY.
-
-    INTHA letter H embedded in scene.
-  -->
-
   <div class="wrap">
 
-    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+    <a class="back-btn" href="index.html">← return to field</a>
 
-    <!-- Flavour status tag -->
     <p class="status-tag">░ node_07 ░ signal: weak ░</p>
 
     <h1>// azeroy_04 //</h1>
 
-    <!-- Story text -->
     <p>
       the corridor ends at a door facing outward.<br>
-      outside: not the field she started in.<br>
-      the landscape is wrong. the sky is the wrong colour.
+      beyond it: not the field she started in.
     </p>
 
     <p>
-      <em>on the gate frame, letters have been cut into the concrete.</em>
+      wrong landscape. wrong sky.<br>
+      <em>the colour of something that hasn't happened yet.</em>
     </p>
 
-    <!-- AZEROY desert scene with gate overlay -->
-    <div id="azeroy-scene" role="img" aria-label="white sand dunes under a dark blue sky — the landscape of AZEROY">
+    <div id="azeroy-scene" role="img" aria-label="white sand dunes under a dark violet sky — the landscape of AZEROY">
 
       <img src="clue4.jpg" alt="azeroy — white desert, dark mountains">
 
-      <!-- Decorative atmospheric symbols -->
       <span class="sym" id="s1">⟁</span>
-      <span class="sym" id="s2">◈ 8888 ◈</span>
+      <span class="sym" id="s2">◈ 1616 ◈</span>
       <span class="sym" id="s3">░░░░░░░░</span>
       <span class="sym" id="s4">✦</span>
 
-      <!-- Gate with Caesar-shifted cipher text -->
-      <div id="gate" aria-label="gate with cipher">
-        <div id="gate-cipher">BAFSPZ</div>
-        <div id="gate-label">decode to pass</div>
+      <div id="gate" aria-label="gate with inscription">
+        <div id="gate-glyphs">
+          <span class="glyph">ᚨ</span>
+          <span class="glyph">ז</span>
+          <span class="glyph">ε</span>
+          <span class="glyph">ᚱ</span>
+          <span class="glyph">ᛟ</span>
+          <span class="glyph">υ</span>
+        </div>
+        <div id="gate-label">name this place</div>
       </div>
 
-      <!-- INTHA letter H -->
       <span id="intha-h" aria-hidden="true">H</span>
+
     </div>
 
-    <!-- In-world hint explaining the cipher rule -->
-    <div class="hint-box">
-      <strong>// inscription beside the gate //</strong><br>
-      in AZEROY, every letter stands one step ahead of its truth.<br>
-      to speak the name of this place, you must step back.
-    </div>
+    <p>
+      on the gate frame: marks she had seen before.<br>
+      not one language. many.<br>
+      <em>she had learned many alphabets. each mark is borrowed from somewhere real.</em>
+    </p>
 
-    <!-- Cipher text displayed clearly for the player -->
-    <p>the letters on the gate:</p>
-    <div class="cipher-display">B &nbsp; A &nbsp; F &nbsp; S &nbsp; P &nbsp; Z</div>
-    <p><em>each letter has been shifted one position forward. shift back to find the name.</em></p>
-
-    <!-- Fragment submission section -->
     <h2>// name this place //</h2>
-    <p>decode the gate inscription. enter the name.</p>
+    <p>read the gate. enter the name.</p>
 
     <div class="row" style="margin-top:14px;">
       <input type="text" id="frag-input" placeholder="the name" maxlength="10">
       <button onclick="checkFragment()">submit</button>
     </div>
 
-    <!-- Feedback messages -->
     <div class="msg-err" id="err-msg">the gate does not open.</div>
     <div class="msg-ok"  id="ok-msg">AZEROY. the gate opens. you are here.</div>
 
-    <!-- Fragment reward panel -->
     <div class="fragment" id="frag-box">AZEROY</div>
 
-    <!-- Next room link — revealed on correct answer -->
     <div id="next-link">
       <p><em>beyond the gate: a radio tower. something is broadcasting from it.</em></p>
       <a class="btn" href="clue5.html">approach the signal →</a>
@@ -201,13 +167,10 @@
   </div>
 
   <script>
-    // In-memory solved state — resets on every page load
     let solved = false;
 
-    // Correct decoded name (Caesar -1 of BAFSPZ)
     const CORRECT = 'AZEROY';
 
-    // Validate cipher answer and unlock next room if correct
     function checkFragment() {
       const val = document.getElementById('frag-input').value.trim().toUpperCase();
       if (val === CORRECT) {
@@ -219,9 +182,9 @@
       }
     }
 
-    // Show success state and reveal next-room link
     function showSolved() {
       solved = true;
+      sessionStorage.setItem('s4', '1');
       hide('err-msg');
       show('ok-msg');
       document.getElementById('frag-box').classList.add('show');
@@ -230,6 +193,8 @@
 
     function show(id) { document.getElementById(id).classList.add('show'); }
     function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+    if (sessionStorage.getItem('s4')) showSolved();
   </script>
 </body>
 </html>

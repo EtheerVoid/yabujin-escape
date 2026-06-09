@@ -138,9 +138,9 @@
 
     <!-- Story text -->
     <p>
-      she found it half-buried in the grass.<br>
-      concrete. heavy door, left open.<br>
-      the kind of place that was built to outlast everything else.
+      half-buried in the grass. concrete.<br>
+      heavy door, left open.<br>
+      built to outlast everything. someone chose this.
     </p>
 
     <!-- Bunker entrance photo -->
@@ -152,9 +152,10 @@
 
     <!-- Story continues -->
     <p>
-      inside was cold. the smell of rust and sand, a place long forgotten.<br>
-      walls covered in marks, she saw numbers, signs, things she didn't recognise.<br>
-      <em>at the far end, a door with a keypad. sealed.</em>
+      inside: cold. rust. sand.<br>
+      walls covered in marks — numbers, signs she made while thinking.<br>
+      not clues. residue.<br>
+      <em>at the far end, a keypad. still powered. still waiting.</em>
     </p>
 
     <!-- Bunker interior photo with overlaid number markings -->
@@ -177,10 +178,9 @@
       <div id="wall-note" aria-label="note on wall">
         in <strong>AZEROY</strong>,<br>
         numbers carry weight.<br><br>
-        1 and 6 => chaos.<br>
-        8 => number of <br>
-          luck and happiness.<br><br>
-        <em>— the Clue Man</em>
+        1 and 6 — chaos.<br>
+        8 — abundance.<br><br>
+        <em>— no name</em>
       </div>
 
       <!-- INTHA letter N -->
@@ -219,7 +219,7 @@
 
       <!-- Next room link — revealed on correct code -->
       <div id="next-link">
-        <p><em>a corridor. at the end: a screen, still running.</em></p>
+        <p><em>a corridor. at the end: something still running, still waiting.</em></p>
         <a class="btn" href="clue2.html">approach the terminal →</a>
       </div>
     </div>
@@ -271,6 +271,7 @@
     // Show success state and reveal next-room link
     function showSolved() {
       solved = true;
+      sessionStorage.setItem('s1', '1');
       show('ok-msg');
       hide('err-msg');
       document.getElementById('next-link').style.display = 'block';
@@ -278,6 +279,8 @@
 
     function show(id) { document.getElementById(id).classList.add('show'); }
     function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+    if (sessionStorage.getItem('s1')) showSolved();
 
     // Keyboard input support
     document.addEventListener('keydown', e => {

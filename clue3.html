@@ -175,9 +175,9 @@
 
     <!-- Story text -->
     <p>
-      among the terminal files: a URL, partially intact.<br>
-      a cached copy of a forum thread. last activity: november 2019.<br>
-      <em>she was the last user to post.</em>
+      among her files: a URL, partially intact.<br>
+      a cached forum thread. last activity: november 2019.<br>
+      <em>she was the last one to write there. nobody came after.</em>
     </p>
 
     <!-- Forum widget -->
@@ -300,8 +300,9 @@
     <div style="margin-top: 40px;">
       <h2>// what did she hide in this post? //</h2>
       <p>
-        the moderator noticed something unusual about the structure.<br>
-        <em>first letters speak.</em>
+        the moderator flagged this post.<br>
+        reason: unusual structure.<br>
+        <em>what did she hide in plain sight?</em>
       </p>
 
       <div class="row" style="margin-top: 14px;">
@@ -319,7 +320,7 @@
 
     <!-- Next room link — revealed on correct answer -->
     <div id="next-link" style="display:none; margin-top: 28px;">
-      <p><em>she mentioned a gate. a way out of the bunker. it leads somewhere else entirely.</em></p>
+      <p><em>she mentioned a gate. a way out. it leads somewhere else entirely.</em></p>
       <a class="btn" href="clue4.html">find the exit →</a>
     </div>
 
@@ -351,6 +352,7 @@
     // Show success state and reveal next-room link
     function showSolved() {
       solved = true;
+      sessionStorage.setItem('s3', '1');
       hide(document.getElementById('err-msg'));
       show(document.getElementById('ok-msg'));
       document.getElementById('frag-box').classList.add('show');
@@ -359,6 +361,8 @@
 
     function show(el) { el.classList.add('show'); }
     function hide(el) { el.classList.remove('show'); }
+
+    if (sessionStorage.getItem('s3')) showSolved();
   </script>
 
 </body>

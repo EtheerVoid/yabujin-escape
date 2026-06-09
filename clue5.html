@@ -107,9 +107,9 @@
 
     <!-- Story text -->
     <p>
-      the tower is still transmitting.<br>
-      the broadcast started in 2019 and never stopped.<br>
-      <em>guihetta left something here. listen carefully.</em>
+      the tower transmits still.<br>
+      the broadcast started in 2019. nobody turned it off.<br>
+      <em>she left it running because she wanted someone to hear what she heard.</em>
     </p>
 
     <!-- YouTube embed: YABUJIN — GARDEN
@@ -136,8 +136,8 @@
     <!-- Fragment submission section -->
     <h2>// what grows in the garden //</h2>
     <p>
-      listen to the chorus. he names the garden.<br>
-      <em>complete: "garden of ___"</em>
+      the chorus names it.<br>
+      <em>complete: garden of ___</em>
     </p>
 
     <div class="row" style="margin-top:14px;">
@@ -154,7 +154,7 @@
 
     <!-- Next room link — revealed on correct answer -->
     <div id="next-link">
-      <p><em>she left one more thing behind. a message about what she was becoming.</em></p>
+      <p><em>one more thing she left behind. her last test — for herself, not for you.</em></p>
       <a class="btn" href="clue6.html">read the last transmission →</a>
     </div>
 
@@ -181,6 +181,7 @@
     // Show success state and reveal next-room link
     function showSolved() {
       solved = true;
+      sessionStorage.setItem('s5', '1');
       hide('err-msg');
       show('ok-msg');
       document.getElementById('frag-box').classList.add('show');
@@ -189,6 +190,8 @@
 
     function show(id) { document.getElementById(id).classList.add('show'); }
     function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+    if (sessionStorage.getItem('s5')) showSolved();
   </script>
 </body>
 </html>

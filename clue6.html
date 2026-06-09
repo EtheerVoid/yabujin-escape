@@ -53,21 +53,6 @@
       color: #3a2a50;
     }
 
-    /* Post-submission: correct card */
-    .q-card.correct {
-      border-color: #1e4a1e;
-      background: #06090a;
-    }
-
-    /* Post-submission: wrong card */
-    .q-card.wrong {
-      border-color: #4a1a1a;
-      background: #090608;
-    }
-
-    .q-card.correct::before { content: '✓'; color: #2a6a2a; }
-    .q-card.wrong::before   { content: '✗'; color: #6a2a2a; }
-
     /* Quote text inside card */
     .q-text {
       font-size: 0.78rem;
@@ -149,72 +134,26 @@
 
     <!-- Story text -->
     <p>
-      guihetta had been collecting fragments for months.<br>
-      writing them on the wall. in notebooks. in text files.<br>
-      things she had heard. things she thought she had heard.
+      for months she collected fragments.<br>
+      things she heard. things she thought she heard.<br>
+      written on walls, in notebooks, in text files.
     </p>
 
     <p>
-      <strong>six fragments remain.</strong><br>
-      three are real — taken from the song she kept coming back to.<br>
-      three she invented herself, or misremembered.<br>
-      <em>she would have known the difference. you must too.</em>
+      she needed to know which were real.<br>
+      which had truly become part of her.<br>
+      <em>which were noise she mistook for signal.</em>
     </p>
 
     <!-- Instruction box -->
     <div class="instruction pixel-border">
-      select the three fragments that come from <strong>GARDEN</strong> by YABUJIN.<br>
-      click to select / deselect. submit when ready.
+      select the three fragments from <strong>GARDEN</strong> by YABUJIN.<br>
+      she spent a long time on this.<br>
+      do you know the difference?
     </div>
 
-    <!-- Six quote cards: A-F
-         data-real="true"  = correct (real lyric)
-         data-real="false" = incorrect (invented) -->
-    <div class="quotes-grid" id="quotes-grid" role="group" aria-label="quote selection">
-
-      <!-- Card A: real lyric -->
-      <div class="q-card" data-id="A" data-real="true"
-           onclick="toggleCard(this)" role="checkbox" aria-checked="false" tabindex="0">
-        <div class="q-text">"gardens, gardens are silent. garden of blood."</div>
-        <div class="q-attr">— fragment A</div>
-      </div>
-
-      <!-- Card B: invented -->
-      <div class="q-card" data-id="B" data-real="false"
-           onclick="toggleCard(this)" role="checkbox" aria-checked="false" tabindex="0">
-        <div class="q-text">"the static field grows between us. she is already gone."</div>
-        <div class="q-attr">— fragment B</div>
-      </div>
-
-      <!-- Card C: real lyric -->
-      <div class="q-card" data-id="C" data-real="true"
-           onclick="toggleCard(this)" role="checkbox" aria-checked="false" tabindex="0">
-        <div class="q-text">"one day we will go away."</div>
-        <div class="q-attr">— fragment C</div>
-      </div>
-
-      <!-- Card D: invented -->
-      <div class="q-card" data-id="D" data-real="false"
-           onclick="toggleCard(this)" role="checkbox" aria-checked="false" tabindex="0">
-        <div class="q-text">"azeroy receives those who cannot be found elsewhere."</div>
-        <div class="q-attr">— fragment D</div>
-      </div>
-
-      <!-- Card E: real lyric -->
-      <div class="q-card" data-id="E" data-real="true"
-           onclick="toggleCard(this)" role="checkbox" aria-checked="false" tabindex="0">
-        <div class="q-text">"i'm watching an angel return."</div>
-        <div class="q-attr">— fragment E</div>
-      </div>
-
-      <!-- Card F: invented -->
-      <div class="q-card" data-id="F" data-real="false"
-           onclick="toggleCard(this)" role="checkbox" aria-checked="false" tabindex="0">
-        <div class="q-text">"you are the signal. you always were."</div>
-        <div class="q-attr">— fragment F</div>
-      </div>
-
-    </div><!-- /.quotes-grid -->
+    <!-- Cards injected by JS (shuffled on each wrong attempt) -->
+    <div class="quotes-grid" id="quotes-grid" role="group" aria-label="quote selection"></div>
 
     <!-- Submit button and count hint -->
     <div style="margin-top: 0;">
@@ -226,14 +165,14 @@
 
     <!-- Feedback messages -->
     <div class="msg-err" id="err-msg">not quite. some of these words were never sung.</div>
-    <div class="msg-ok"  id="ok-msg">correct. she knew them all by heart. RETURN.</div>
+    <div class="msg-ok"  id="ok-msg">correct. these were truly hers. RETURN.</div>
 
     <!-- Fragment reward panel -->
     <div class="fragment" id="frag-box">RETURN</div>
 
     <!-- Next room link — revealed on correct selection -->
     <div id="next-link">
-      <p><em>you have all the fragments. the exit is waiting.</em></p>
+      <p><em>you have everything she left. the exit is open.</em></p>
       <a class="btn" href="exit.html">proceed to exit →</a>
     </div>
 
@@ -241,74 +180,79 @@
 
 
   <script>
-    // In-memory solved state — resets on every page load
     let solved = false;
 
-    // Toggle selection state on a quote card
-    // Ignored after puzzle is already solved
+    const CARDS = [
+      { text: '"gardens, gardens are silent. garden of blood."', real: true },
+      { text: '"the static field grows between us. she is already gone."', real: false },
+      { text: '"one day we will go away."', real: true },
+      { text: '"azeroy receives those who cannot be found elsewhere."', real: false },
+      { text: '"i\'m watching an angel return."', real: true },
+      { text: '"you are the signal. you always were."', real: false },
+    ];
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('quotes-grid');
+      grid.innerHTML = '';
+      CARDS.forEach(card => {
+        const div = document.createElement('div');
+        div.className = 'q-card';
+        div.dataset.real = card.real;
+        div.setAttribute('role', 'checkbox');
+        div.setAttribute('aria-checked', 'false');
+        div.setAttribute('tabindex', '0');
+        div.innerHTML = `<div class="q-text">${card.text}</div>`;
+        div.addEventListener('click', () => toggleCard(div));
+        div.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(div); }
+        });
+        grid.appendChild(div);
+      });
+    }
+
     function toggleCard(card) {
       if (solved) return;
-      const isSelected = card.classList.toggle('selected');
-      card.setAttribute('aria-checked', isSelected.toString());
+      const on = card.classList.toggle('selected');
+      card.setAttribute('aria-checked', String(on));
     }
 
-    // Keyboard support: Enter or Space to toggle a card
-    document.querySelectorAll('.q-card').forEach(card => {
-      card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleCard(card);
-        }
-      });
-    });
-
-    // Validate selection: must be exactly 3 cards, all with data-real="true"
     function checkSelection() {
       const selected = [...document.querySelectorAll('.q-card.selected')];
+      if (selected.length !== 3) { show('err-msg'); hide('ok-msg'); return; }
 
-      // Require exactly 3 selected
-      if (selected.length !== 3) {
-        show('err-msg');
-        hide('ok-msg');
-        return;
-      }
-
-      // Check all 3 selected are real lyrics
-      const allReal = selected.every(c => c.dataset.real === 'true');
-
-      if (allReal) {
-        showSolved(false);
+      if (selected.every(c => c.dataset.real === 'true')) {
+        showSolved();
       } else {
-        // Mark correct and wrong selections visually
-        document.querySelectorAll('.q-card').forEach(card => {
-          card.classList.remove('correct', 'wrong', 'selected');
-          if (selected.includes(card)) {
-            card.classList.add(card.dataset.real === 'true' ? 'correct' : 'wrong');
-          }
-        });
         show('err-msg');
         hide('ok-msg');
-        document.getElementById('frag-box').classList.remove('show');
+        shuffle(CARDS);
+        renderCards();
       }
     }
 
-    // Show success state, mark correct cards, reveal next-room link
-    function showSolved(restore) {
+    function showSolved() {
       solved = true;
+      sessionStorage.setItem('s6', '1');
       hide('err-msg');
       show('ok-msg');
       document.getElementById('frag-box').classList.add('show');
       document.getElementById('next-link').style.display = 'block';
-
-      // Visually mark all correct cards
-      document.querySelectorAll('.q-card').forEach(card => {
-        card.classList.remove('selected', 'wrong');
-        if (card.dataset.real === 'true') card.classList.add('correct');
-      });
     }
 
     function show(id) { document.getElementById(id).classList.add('show'); }
     function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+    shuffle(CARDS);
+    renderCards();
+
+    if (sessionStorage.getItem('s6')) showSolved();
   </script>
 
 </body>
