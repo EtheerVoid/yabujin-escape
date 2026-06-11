@@ -20,37 +20,17 @@
       pointer-events: none;
     }
 
+    /* Single static background image — no blend-mode / blur (Chromium-friendly) */
     #exit-bg img {
       position: absolute;
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center;
-    }
-
-    /* Background layer 1: blurred ethereal base */
-    #ebg1 {
-      opacity: 0.08;
-      filter: blur(2px) saturate(0.6);
-    }
-
-    /* Background layer 2: spiritual/religious collage, screen blend */
-    #ebg2 {
-      opacity: 0.07;
-      mix-blend-mode: screen;
-      filter: saturate(0.4) brightness(0.8);
-    }
-
-    /* Background layer 3: street/anime layer, screen blend */
-    #ebg3 {
-      opacity: 0.09;
-      mix-blend-mode: screen;
-      filter: saturate(0.3) brightness(0.7) hue-rotate(200deg);
+      opacity: 0.10;
     }
 
     /* Background becomes slightly more visible after epilogue reveals */
-    body.revealed #ebg1 { opacity: 0.13; }
-    body.revealed #ebg2 { opacity: 0.10; }
-    body.revealed #ebg3 { opacity: 0.12; }
+    body.revealed #exit-bg img { opacity: 0.16; }
 
     /* Content sits above the fixed background */
     .wrap { position: relative; z-index: 1; }
@@ -255,9 +235,7 @@
 
   <!-- Layered background collage (pointer-events:none) -->
   <div id="exit-bg" aria-hidden="true">
-    <img id="ebg1" src="exit1.jpg" alt="">
-    <img id="ebg2" src="exit2.jpg" alt="">
-    <img id="ebg3" src="exit3.jpg" alt="">
+    <img src="exit1.jpg" alt="">
   </div>
 
   <div class="wrap">
@@ -360,7 +338,7 @@
   <div id="easter" role="dialog" aria-label="hidden ending" aria-hidden="true">
 
     <!-- YABUJIN logo as a glowing achievement seal -->
-    <img class="easter-logo" src="yabujin-logo.png" alt="YABUJIN">
+    <img class="easter-logo" src="yabujin-logo.png" loading="lazy" decoding="async" alt="YABUJIN">
 
     <!-- Holographic achievement banner -->
     <div class="achv">★ INTHA UNLOCKED ★</div>

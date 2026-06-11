@@ -114,23 +114,39 @@ Scenes: `index.jpg` (field), `entrytobunker.jpg` + `insidebunker.jpg` (clue1),
 `clue4.jpg` (azeroy), `exit1-3.jpg` (exit collage bg).
 INTHA overlay: `intha-anime.jpg` + `yabujin-logo.png`.
 Decorative / easter media:
-- clue2: `term-crt.png` + `term-lain.jpg` (layered terminal background, screen-
-  blended + hue-shifted violet), `lain-peek.png` (Iwakura Lain, fixed bottom-
-  right, peeking — `#lain-peek`).
+- clue2: `term-crt.jpg` (single static CRT background, `#terminal-frame::before`,
+  hue-shifted violet), `lain-peek.png` (Iwakura Lain, fixed bottom-right,
+  peeking — `#lain-peek`).
 - clue4: `yabumon-card.png` — shown by the `yabumon` easter-egg button
   (`#yabumon-btn` → `#yabumon` holo-card overlay, `toggleYabumon()`).
-- clue5: `azeroy-angel.gif` (`.decor-angel`) + `duomo-head.png` (`.decor-duomo`).
-- clue6: `gates-azeroy.jpg` (`.gates-banner`).
+- clue6: `gates-azeroy.jpg` — fullscreen wallpaper via `#wallpaper` (fixed,
+  z-index -2, dark veil `::after`).
+- exit: `exit1.jpg` only (single static `#exit-bg img`).
 
 ## Per-page visual notes
 
 - **clue2 terminal is purple/magenta** (not green): an override `<style>` block
   recolours output/prompt/input (`#b15cff`/`#c77dff`/`#9d4edd`, err `#ff5c8a`).
 - INTHA overlay (`#easter`) has a cheap animated shader (`#easter::before`: one
-  blurred, slowly-rotating radial-gradient layer; semi-transparent `#easter` bg
-  lets it show; honours `prefers-reduced-motion`).
-- Y2K accents (holo gradient text `@keyframes holo`, glows) appear in the INTHA
-  overlay and the yabumon card overlay.
+  blurred, slowly-rotating radial-gradient layer, GPU-composited; semi-
+  transparent `#easter` bg lets it show; honours `prefers-reduced-motion`).
+- Y2K accents (holo gradient text `@keyframes holo`, glows) live only inside the
+  INTHA and yabumon overlays (both `display:none` until opened, so no idle cost).
+
+## Performance / compatibility (keep it this way)
+
+Chromium (Helium) lagged hard while Firefox was fine. Causes fixed and to AVOID
+re-introducing:
+- **`mix-blend-mode` / `background-blend-mode`** — Chromium-slow. Removed from
+  exit bg + clue2. Don't add back.
+- Full-viewport `repeating-linear-gradient` (old scanline) → now a 4px tiled
+  `background-size` gradient.
+- Animated **GIF** (constant repaint) — removed.
+- Heavy images downscaled/recompressed (~7MB → ~2.5MB). Keep new images ≤ ~1600px
+  / a few hundred KB; convert photo-PNGs to JPG.
+- Animations/blurred filter layers are gated inside `display:none` overlays.
+- Below-fold + overlay images use `loading="lazy" decoding="async"`.
+- `text-size-adjust:100%` on `html` for mobile.
 
 ## Grading status (40/40 mechanics met)
 

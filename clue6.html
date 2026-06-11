@@ -101,23 +101,23 @@
       ) 2;
     }
 
-    /* decorative banner — gates to azeroy */
-    .gates-banner {
-      display: block;
-      width: 100%;
-      margin: 8px 0 8px;
-      border: 1px solid #2a2440;
-      box-shadow: 0 0 26px rgba(120, 90, 200, 0.25);
-      filter: saturate(0.9) brightness(0.82) contrast(1.05);
+    /* gates-to-azeroy wallpaper — one static fixed layer behind all content.
+       No blend-mode / filter / animation = cheap and Chromium-friendly. */
+    #wallpaper {
+      position: fixed; inset: 0; z-index: -2;
+      background: url('gates-azeroy.jpg') center center / cover no-repeat;
     }
-    .gates-cap {
-      font-size: 0.56rem; color: #3a3358;
-      letter-spacing: 0.3em; margin-bottom: 26px;
+    #wallpaper::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(3, 2, 8, 0.80);   /* dark veil keeps text readable */
     }
   </style>
 </head>
 
 <body>
+
+  <!-- gates-to-azeroy wallpaper (behind all content) -->
+  <div id="wallpaper" aria-hidden="true"></div>
 
   <!--
     CLUE 6 — THE MIRROR
@@ -164,10 +164,6 @@
       which of them had truly become part of her.<br>
       <em>which were noise she mistook for signal.</em>
     </p>
-
-    <!-- decorative banner: gates to azeroy -->
-    <img class="gates-banner" src="gates-azeroy.jpg" alt="gates to azeroy — a doorway opening in light">
-    <div class="gates-cap">// gates to azeroy //</div>
 
     <!-- Instruction box -->
     <div class="instruction pixel-border">

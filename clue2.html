@@ -120,17 +120,14 @@
       box-shadow: 0 0 44px rgba(150, 60, 220, 0.30);
       overflow: hidden;
     }
-    /* CRT screenshot + lain-with-code, screen-blended and hue-shifted to violet,
-       sitting faintly behind the terminal text */
+    /* CRT screenshot behind the terminal text — single static image, hue-shifted
+       to violet. Static filter = one-time raster (no per-frame cost). */
     #terminal-frame::before {
       content: '';
       position: absolute; inset: 0; z-index: 0;
-      background-image: url('term-lain.jpg'), url('term-crt.png');
-      background-size: cover, cover;
-      background-position: center, center;
-      background-blend-mode: screen;
-      filter: saturate(0.65) hue-rotate(245deg) brightness(0.85);
-      opacity: 0.15;
+      background: url('term-crt.jpg') center center / cover no-repeat;
+      filter: hue-rotate(245deg) saturate(0.7) brightness(0.85);
+      opacity: 0.13;
       pointer-events: none;
     }
     #term-bar, #output, #input-row { position: relative; z-index: 1; }
@@ -171,7 +168,7 @@
 <body>
 
   <!-- Iwakura Lain, peeking in from the screen edge (decorative overlay) -->
-  <img id="lain-peek" src="lain-peek.png" alt="" aria-hidden="true">
+  <img id="lain-peek" src="lain-peek.png" loading="lazy" decoding="async" alt="" aria-hidden="true">
 
   <!--
     CLUE 2 — THE TERMINAL

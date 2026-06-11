@@ -26,6 +26,8 @@
 html {
   font-size: clamp(13px, 0.5vw + 10.5px, 19px);
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;   /* stop mobile font auto-inflation */
+  text-size-adjust: 100%;
 }
 
 html, body {
@@ -36,18 +38,18 @@ html, body {
   min-height: 100vh;
 }
 
-/* CRT scanline overlay — pure CSS, no animation */
+/* CRT scanline overlay — a 4px gradient TILE (background-size) instead of a
+   full-viewport repeating-linear-gradient. Chromium rasterizes one tiny tile
+   and repeats it on the GPU = far cheaper than rastering the whole screen. */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 3px,
-    rgba(0, 0, 0, 0.055) 3px,
-    rgba(0, 0, 0, 0.055) 4px
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.055) 50%
   );
+  background-size: 100% 4px;
   pointer-events: none;   /* must not block clicks */
   z-index: 9000;
 }
