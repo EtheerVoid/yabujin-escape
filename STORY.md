@@ -246,16 +246,16 @@ Frequency is **40.16**. Her name is **Guihetta** (forum/terminal handles read
 > *whether it's waiting for you is a different question.*
 
 ### clue1
-> half-buried in the grass. concrete.
+> half buried in the grass,, concrete.
 > a heavy door left open by someone who probably hasn't been here for a long time.
-> built to outlast everything, perhaps even you :} .
+> built to outlast everything, perhaps even you.
 >
-> it is even colder inside.
+> even colder inside on the inside,,
 > you do your best not to breathe all the dust in.
 > the walls are covered in marks, numbers, signs **she** made while thinking.
-> not clues. residue.
-> *at the far end, a keypad. still powered. still waiting.*
-> *perhaps these signs will aid you in getting further, if that's what you want.*
+> not clues,, just residue.
+> *at the far end is a keypad, still powered and waiting.*
+> &perhaps these signs will aid you in getting further, if that's what you want.&
 
 ### clue2
 > the old crt monitor is warm, which is a nice change of pace.
