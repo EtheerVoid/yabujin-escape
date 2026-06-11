@@ -153,7 +153,7 @@
 
 <body>
 
-  <!-- Field scene: image map coords authored for 4000x3000 natural size,
+  <!-- Field scene: image map coords authored for 1600x1200 natural size,
        scaled to rendered size by JS below -->
   <div id="field">
 
@@ -172,7 +172,7 @@
         id="area-bunker"
         href="clue1.html"
         shape="circle"
-        coords="2300, 2150, 360"
+        coords="920, 860, 144"
         alt="something in the grass"
         title="something in the grass"
       >
@@ -182,7 +182,7 @@
         class="dead-end"
         href="#"
         shape="rect"
-        coords="3550, 60, 4000, 1380"
+        coords="1420, 24, 1600, 552"
         data-msg="watching. always watching."
         alt="a face"
         title="a face"
@@ -193,7 +193,7 @@
         class="dead-end"
         href="#"
         shape="rect"
-        coords="180, 60, 1780, 1380"
+        coords="72, 24, 712, 552"
         data-msg="signal detected. signal lost."
         alt="static"
         title="static"
@@ -204,7 +204,7 @@
         class="dead-end"
         href="#"
         shape="rect"
-        coords="0, 1400, 420, 3000"
+        coords="0, 560, 168, 1200"
         data-msg="she recognized herself. she did not."
         alt="a figure"
         title="a figure"
@@ -215,7 +215,7 @@
         class="dead-end"
         href="#"
         shape="rect"
-        coords="900, 2000, 1820, 2700"
+        coords="360, 800, 728, 1080"
         data-msg="something broken. no name on the tags."
         alt="debris"
         title="debris"
@@ -282,7 +282,7 @@
     sessionStorage.clear();
 
     // --- Image map coordinate scaler ---
-    // Coords authored for natural image size (4000x3000).
+    // Coords authored for natural image size (1600x1200).
     // Scales proportionally to actual rendered size.
     const img   = document.getElementById('field-img');
     const map   = document.getElementById('field-map');
@@ -294,8 +294,8 @@
     });
 
     function scaleMap() {
-      const naturalW  = img.naturalWidth  || 4000;
-      const naturalH  = img.naturalHeight || 3000;
+      const naturalW  = img.naturalWidth  || 1600;
+      const naturalH  = img.naturalHeight || 1200;
       const renderedW = img.offsetWidth;
       const renderedH = img.offsetHeight;
       const sx = renderedW / naturalW;

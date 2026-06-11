@@ -100,7 +100,7 @@
     #easter {
       display: none;
       position: fixed; inset: 0;
-      background: rgba(5, 1, 13, 0.55);
+      background: linear-gradient(160deg, #20242e 0%, #161922 55%, #0e1016 100%);
       z-index: 9998;
       flex-direction: column;
       align-items: center;
@@ -112,29 +112,8 @@
       padding: clamp(24px, 5vh, 48px) clamp(16px, 4vw, 40px);
     }
 
-    /* Retro-futuristic shader background — a single blurred gradient layer,
-       slowly rotating. Cheap (one compositor-animated element, only while
-       the overlay is shown). Shows through the semi-transparent #easter bg. */
-    #easter::before {
-      content: '';
-      position: absolute;
-      inset: -25%;
-      z-index: -1;
-      background:
-        radial-gradient(circle at 28% 30%, rgba(130, 80, 230, 0.30), transparent 45%),
-        radial-gradient(circle at 72% 60%, rgba(40, 130, 210, 0.26), transparent 45%),
-        radial-gradient(circle at 50% 82%, rgba(225, 80, 165, 0.22), transparent 50%),
-        #05010d;
-      filter: blur(46px);
-      animation: easter-aura 22s linear infinite;
-      will-change: transform;
-    }
-    @keyframes easter-aura {
-      to { transform: rotate(360deg) scale(1.12); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #easter::before { animation: none; }
-    }
+    /* Background is a static cool-slate gradient (set on #easter above).
+       No animation, no blur, no extra layer — zero runtime cost. */
     #easter.show { display: flex; }
 
     /* All easter content centred in a constrained column */
