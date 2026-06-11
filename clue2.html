@@ -102,13 +102,6 @@
       margin-top: 28px;
     }
 
-    /* INTHA letter T — nearly invisible in terminal boot text */
-    #intha-t {
-      font-size: 8px;
-      color: #010304;
-      user-select: text;
-      display: inline;
-    }
   </style>
 
   <style>
@@ -147,8 +140,6 @@
     #cmd-input    { border-bottom: 1px solid #3a1a55; color: #c77dff; caret-color: #c77dff; }
     #cmd-input:focus { border-bottom-color: #c77dff; background: #0d0518; }
 
-    /* keep hidden INTHA 'T' near-invisible on the new background */
-    #intha-t { color: #0a0414; }
 
     /* Iwakura Lain peeking in from the side of the screen — pure decoration */
     #lain-peek {
@@ -182,7 +173,6 @@
       5. Player applies ROT13 to "ABQR" → gets "NODE"
       6. Player submits NODE below → solved
 
-    INTHA letter T is embedded in the .echo file output.
   -->
 
   <div class="wrap">
@@ -216,7 +206,7 @@
         <div class="line-dim">warning: 1 unread message in /var/mail/guheitta</div>
         <div class="line-out">&nbsp;</div>
         <div class="line-out">guheitta@node_07:~$
-          <span id="intha-t" aria-hidden="true">T</span>
+          <span style="font-size:8px;color:#0a0414;user-select:text;display:inline;" aria-hidden="true">T</span>
           type <strong>help</strong> for available commands.
         </div>
       </div><!-- /#output -->
@@ -322,7 +312,6 @@
       ],
       // Hidden file — only visible with `ls -a`
       // Contains ROT13-encoded answer: ABQR → NODE
-      // INTHA letter T is embedded here as the prefix
       '.echo': [
         '[ .echo ]',
         '─────────────────────────────────────',

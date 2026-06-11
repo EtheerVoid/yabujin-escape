@@ -229,14 +229,16 @@ SVGs scale perfectly at any size (unlike raster images like JPG/PNG) and can be 
 
 ### The INTHA Letters (Hidden Text Trick)
 
-Scattered across pages are nearly-invisible HTML elements:
+Scattered across pages are nearly-invisible HTML elements. They have **no named IDs or classes** — all styling is inlined directly on the element so View Source gives no naming hint:
 
 ```html
-<span id="intha-i" aria-hidden="true">I</span>
+<span style="position:absolute;bottom:3px;left:8px;font-size:9px;color:#060610;pointer-events:none;user-select:text;letter-spacing:0.1em;" aria-hidden="true">I</span>
 ```
 
 > [!info] 🎨 STYLING — but also logic
-> The letters are hidden using CSS: `color: #060610` (nearly same as background), `font-size: 9px`. BUT the key functional property is `user-select: text` — this means if a user highlights all text on the page (Ctrl+A), the letter gets selected and shows up. This is intentional — it's how players discover the INTHA easter egg.
+> The letters are hidden using inline CSS: `color:#060610` (nearly same as background), `font-size:9px`. BUT the key functional property is `user-select:text` — this means if a user highlights all text on the page (Ctrl+A), the letter gets selected and shows up. This is intentional — it's how players discover the INTHA easter egg.
+
+**Why no ID or class?** An element like `<span id="intha-i">` would immediately betray the secret word to anyone reading source. Using anonymous inline styles removes that hint entirely — the letter `I` appears in source with no label explaining what it is.
 
 The letters spell **I-N-T-H-A** across five different pages. Typing that word on the keyboard at `exit.html` triggers the hidden ending.
 
@@ -641,30 +643,38 @@ cmdInput.addEventListener('keydown', e => {
 
 ### Rolling Buffer — exit.html (INTHA Easter Egg)
 
-Detecting a secret word typed anywhere on the keyboard:
+Detecting a secret word typed anywhere on the keyboard — **without storing the word in source**:
 
 ```js
-const SECRET = 'INTHA';
-let keyBuf   = '';
+// The secret word is never written here — only its SHA-256 hash
+const SECRET_HASH = 'b8218ead8e0e737fc1070d4fccd0bf9392517f6b602fd6debfaf6fe769069c32';
+const SECRET_LEN  = 5;
+let keyBuf        = '';
 
 document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeEaster(); return; }
   if (e.key.length !== 1) return;  // ignore Enter, Shift, ArrowUp, etc.
-  
-  keyBuf += e.key.toUpperCase();   // append character
-  
-  // Keep only the last 5 characters
-  if (keyBuf.length > SECRET.length) {
-    keyBuf = keyBuf.slice(-SECRET.length);
+
+  keyBuf += e.key.toUpperCase();
+  if (keyBuf.length > SECRET_LEN) {
+    keyBuf = keyBuf.slice(-SECRET_LEN);
   }
-  
-  if (keyBuf === SECRET) {
-    openEaster();
-    keyBuf = '';
-  }
+
+  if (keyBuf.length < SECRET_LEN) return;  // wait until buffer is full
+
+  // Hash buffer and compare — never compare against plaintext
+  sha256(keyBuf).then(h => {
+    if (h === SECRET_HASH) {
+      openEaster();
+      keyBuf = '';
+    }
+  });
 });
 ```
 
-**Why a rolling buffer?** If the player types "XINTHA", without rolling, the buffer would be "XINTHA" and never match "INTHA". By always keeping only the last 5 characters (`slice(-5)`), the buffer becomes "INTHA" at the right moment.
+**Why a rolling buffer?** If the player types "XINTHA", without rolling, the buffer would be "XINTHA" and never match. By always keeping only the last 5 characters (`slice(-5)`), the buffer becomes the right word at the right moment.
+
+**Why SHA-256 here too?** Same reason as puzzle answers — `const SECRET = 'INTHA'` in source would immediately reveal the trigger word to anyone doing View Source. Storing only the hash means the word is unguessable from the code. The only way to know what to type is to find the scattered letters in-game.
 
 `e.key.length !== 1` filters out special keys — `'Enter'` has length 5, `'ArrowUp'` has length 7, but regular characters like `'a'` or `'I'` have length 1.
 
@@ -962,10 +972,11 @@ async function checkFragments() {
 
 `Object.entries(obj)` returns `[['f1', 'hash...'], ['f2', 'hash...'], ...]` — lets you loop over an object's key-value pairs.
 
-**INTHA Easter Egg (Rolling Buffer):**
+**INTHA Easter Egg (Rolling Buffer + SHA-256):**
 - Keyboard listener on the entire `document`
 - Rolling 5-char buffer via `keyBuf.slice(-5)`
-- When buffer matches `'INTHA'`: open overlay, set iframe src (which starts video autoplay)
+- On each keystroke with a full buffer: `sha256(keyBuf)` compared to `SECRET_HASH` — the word never appears in source
+- Match: open overlay, set iframe src (starts video autoplay)
 - Escape key closes overlay and clears iframe src (stops video)
 
 ```js

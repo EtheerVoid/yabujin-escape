@@ -96,7 +96,7 @@
       margin-left: 6px;
     }
 
-    /* Easter egg overlay — full-screen, triggered by typing INTHA */
+    /* Easter egg overlay — full-screen, triggered by keyboard sequence */
     #easter {
       display: none;
       position: fixed; inset: 0;
@@ -208,7 +208,7 @@
     Player enters all five collected fragments.
     Correct set: NODE / SIGNAL / AZEROY / BLOOD / RETURN
 
-    Easter egg: type INTHA on keyboard → overlay with YABUJIN — CHALICE OF MIND
+    Easter egg: a hidden keyboard sequence triggers an overlay with YABUJIN — CHALICE OF MIND.
     Press Escape to close easter egg.
   -->
 
@@ -313,7 +313,7 @@
 
   </div>
 
-  <!-- Easter egg overlay — typing INTHA triggers this -->
+  <!-- Easter egg overlay -->
   <div id="easter" role="dialog" aria-label="hidden ending" aria-hidden="true">
 
     <!-- YABUJIN logo as a glowing achievement seal -->
@@ -369,7 +369,7 @@
 
     <!-- YABUJIN — CHALICE OF MIND
          src left empty until triggered — avoids preloading
-         autoplay requires prior user interaction (they typed INTHA) -->
+         autoplay requires prior user interaction -->
     <div id="easter-video-outer">
       <div id="easter-video-wrap">
         <iframe
@@ -456,12 +456,14 @@
       showEpilogue();
     }
 
-    // --- INTHA easter egg ---
-    // Player types the letters I-N-T-H-A on keyboard to trigger hidden ending
-    // Uses a rolling 5-character buffer
+    // --- hidden easter egg ---
+    // Keyboard sequence triggers hidden ending.
+    // Word never stored in source — only its SHA-256 digest.
+    // Rolling 5-character buffer hashed on each keystroke; match = open.
 
-    const SECRET = 'INTHA';
-    let keyBuf   = '';
+    const SECRET_HASH = 'b8218ead8e0e737fc1070d4fccd0bf9392517f6b602fd6debfaf6fe769069c32';
+    const SECRET_LEN  = 5;
+    let keyBuf        = '';
 
     document.addEventListener('keydown', e => {
       // Escape closes the easter egg overlay
@@ -473,17 +475,22 @@
       // Only track single printable characters
       if (e.key.length !== 1) return;
 
-      // Append to rolling buffer, keep last 5 characters
+      // Append to rolling buffer, keep last SECRET_LEN characters
       keyBuf += e.key.toUpperCase();
-      if (keyBuf.length > SECRET.length) {
-        keyBuf = keyBuf.slice(-SECRET.length);
+      if (keyBuf.length > SECRET_LEN) {
+        keyBuf = keyBuf.slice(-SECRET_LEN);
       }
 
-      // Trigger easter egg when buffer matches secret word
-      if (keyBuf === SECRET) {
-        openEaster();
-        keyBuf = '';
-      }
+      // Only check once buffer is full
+      if (keyBuf.length < SECRET_LEN) return;
+
+      // Hash buffer and compare — secret word never appears in source
+      sha256(keyBuf).then(h => {
+        if (h === SECRET_HASH) {
+          openEaster();
+          keyBuf = '';
+        }
+      });
     });
 
     // Open easter egg overlay and start video (src set now to trigger autoplay)
