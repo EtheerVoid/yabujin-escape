@@ -110,9 +110,27 @@ CRT scanline: `body::after` repeating-linear-gradient, `pointer-events:none`,
 
 ## Assets
 
-`index.jpg` (field), `entrytobunker.jpg` + `insidebunker.jpg` (clue1),
-`clue4.jpg` (azeroy), `exit1-3.jpg` (exit collage bg), `intha-anime.jpg` +
-`yabujin-logo.png` (INTHA overlay).
+Scenes: `index.jpg` (field), `entrytobunker.jpg` + `insidebunker.jpg` (clue1),
+`clue4.jpg` (azeroy), `exit1-3.jpg` (exit collage bg).
+INTHA overlay: `intha-anime.jpg` + `yabujin-logo.png`.
+Decorative / easter media:
+- clue2: `term-crt.png` + `term-lain.jpg` (layered terminal background, screen-
+  blended + hue-shifted violet), `lain-peek.png` (Iwakura Lain, fixed bottom-
+  right, peeking — `#lain-peek`).
+- clue4: `yabumon-card.png` — shown by the `yabumon` easter-egg button
+  (`#yabumon-btn` → `#yabumon` holo-card overlay, `toggleYabumon()`).
+- clue5: `azeroy-angel.gif` (`.decor-angel`) + `duomo-head.png` (`.decor-duomo`).
+- clue6: `gates-azeroy.jpg` (`.gates-banner`).
+
+## Per-page visual notes
+
+- **clue2 terminal is purple/magenta** (not green): an override `<style>` block
+  recolours output/prompt/input (`#b15cff`/`#c77dff`/`#9d4edd`, err `#ff5c8a`).
+- INTHA overlay (`#easter`) has a cheap animated shader (`#easter::before`: one
+  blurred, slowly-rotating radial-gradient layer; semi-transparent `#easter` bg
+  lets it show; honours `prefers-reduced-motion`).
+- Y2K accents (holo gradient text `@keyframes holo`, glows) appear in the INTHA
+  overlay and the yabumon card overlay.
 
 ## Grading status (40/40 mechanics met)
 
