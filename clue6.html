@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      max-width: 820px;
+      max-width: 100%;
       margin: 24px 0 32px;
     }
 
@@ -125,7 +125,10 @@
 
   <div class="wrap">
 
-    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+    <div class="nav">
+      <a class="back-btn" href="clue5.html">← one step back</a>
+      <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">return to field →</a>
+    </div>
 
     <!-- Flavour decoration -->
     <p class="visitor-tag">░ last transmission: 2019-11-22 ░</p>
@@ -134,23 +137,27 @@
 
     <!-- Story text -->
     <p>
-      for months she collected fragments.<br>
-      things she heard. things she thought she heard.<br>
-      written on walls, in notebooks, in text files.
+      for months <strong>she</strong> collected fragments.
+    </p>
+    <span class="note">think <strong>everyone</strong> knows her name is Guihetta by now</span>
+    <p>
+      the things she heard,, things she thought she heard.<br>
+      written on the walls, in notebooks, in text files.
     </p>
 
     <p>
       she needed to know which were real.<br>
-      which had truly become part of her.<br>
+      which of them had truly become part of her.<br>
       <em>which were noise she mistook for signal.</em>
     </p>
 
     <!-- Instruction box -->
     <div class="instruction pixel-border">
       select the three fragments from <strong>GARDEN</strong> by YABUJIN.<br>
-      she spent a long time on this.<br>
+      <strong>she</strong> spent a long time on this.<br>
       do you know the difference?
     </div>
+    <span class="note">think ;&gt;</span>
 
     <!-- Cards injected by JS (shuffled on each wrong attempt) -->
     <div class="quotes-grid" id="quotes-grid" role="group" aria-label="quote selection"></div>
@@ -172,24 +179,34 @@
 
     <!-- Next room link — revealed on correct selection -->
     <div id="next-link">
-      <p><em>you have everything she left. the exit is open.</em></p>
+      <p><em>you have everything she left.<br>the exit is open now.</em></p>
       <a class="btn" href="exit.html">proceed to exit →</a>
     </div>
 
   </div><!-- /.wrap -->
 
 
+  <script src="sha.js"></script>
   <script>
     let solved = false;
 
+    // Card texts only — which three are "real" is NOT marked in source.
+    // Correctness is decided by hashing the selected text and matching REAL_HASHES.
     const CARDS = [
-      { text: '"gardens, gardens are silent. garden of blood."', real: true },
-      { text: '"the static field grows between us. she is already gone."', real: false },
-      { text: '"one day we will go away."', real: true },
-      { text: '"azeroy receives those who cannot be found elsewhere."', real: false },
-      { text: '"i\'m watching an angel return."', real: true },
-      { text: '"you are the signal. you always were."', real: false },
+      '"gardens, gardens are silent. garden of blood."',
+      '"the static field grows between us. she is already gone."',
+      '"one day we will go away."',
+      '"azeroy receives those who cannot be found elsewhere."',
+      '"i\'m watching an angel return."',
+      '"you are the signal. you always were."',
     ];
+
+    // SHA-256 digests of the three genuine GARDEN lyrics
+    const REAL_HASHES = new Set([
+      '7e09bbd1cfe9e6ac8586de14b94ba1d3a72dbdbadb0302f2bde6ad74dcd97770',
+      '6f15a7a5cfb9beb2709106c3ea32c9387a48aa54693bf00dda60da757ca326c5',
+      '92c50f40b1a703740f0013a67f213bf8f984a39a4d8d68829738907c50251674',
+    ]);
 
     function shuffle(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
@@ -201,14 +218,14 @@
     function renderCards() {
       const grid = document.getElementById('quotes-grid');
       grid.innerHTML = '';
-      CARDS.forEach(card => {
+      CARDS.forEach(text => {
         const div = document.createElement('div');
         div.className = 'q-card';
-        div.dataset.real = card.real;
+        div.dataset.text = text;
         div.setAttribute('role', 'checkbox');
         div.setAttribute('aria-checked', 'false');
         div.setAttribute('tabindex', '0');
-        div.innerHTML = `<div class="q-text">${card.text}</div>`;
+        div.innerHTML = `<div class="q-text">${text}</div>`;
         div.addEventListener('click', () => toggleCard(div));
         div.addEventListener('keydown', e => {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(div); }
@@ -223,11 +240,12 @@
       card.setAttribute('aria-checked', String(on));
     }
 
-    function checkSelection() {
+    async function checkSelection() {
       const selected = [...document.querySelectorAll('.q-card.selected')];
       if (selected.length !== 3) { show('err-msg'); hide('ok-msg'); return; }
 
-      if (selected.every(c => c.dataset.real === 'true')) {
+      const hashes = await Promise.all(selected.map(c => sha256(c.dataset.text)));
+      if (hashes.every(h => REAL_HASHES.has(h))) {
         showSolved();
       } else {
         show('err-msg');

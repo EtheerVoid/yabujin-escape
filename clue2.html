@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
 
     /* CRT terminal frame */
     #terminal-frame {
-      max-width: 740px;
+      max-width: 100%;
       margin: 0 auto;
       background: #010306;
       border: 1px solid #0a1a0a;
@@ -131,15 +131,18 @@
 
   <div class="wrap">
 
-    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+    <div class="nav">
+      <a class="back-btn" href="clue1.html">← one step back</a>
+      <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">return to field →</a>
+    </div>
 
     <h1>// terminal_02 //</h1>
 
     <!-- Story text -->
     <p>
-      the monitor is warm.<br>
-      it has been running since she left.<br>
-      the cursor still blinks. <em>it doesn't know she's gone.</em>
+      the old crt monitor is warm, which is a nice change of pace.<br>
+      it has been running since <strong>she</strong> left.<br>
+      the cursor still blinks. <em>poor thing doesn't know she's long gone.</em>
     </p>
 
     <!-- Terminal widget -->
@@ -183,9 +186,10 @@
     <div style="margin-top: 36px;">
       <h2>// decoded //</h2>
       <p>
-        a hidden file. something encoded inside.<br>
-        she didn't leave it for you.<br>
-        <em>but here you are.</em>
+        a hidden file with something encoded inside,, hmm.<br>
+        <strong>she</strong> didn't leave it for you.<br>
+        <em>but here you are.<br>
+        perhaps looking at the username will help you figure out her name.</em>
       </p>
 
       <div class="row" style="margin-top: 12px;">
@@ -210,6 +214,7 @@
   </div><!-- /.wrap -->
 
 
+  <script src="sha.js"></script>
   <script>
     // In-memory solved state — resets on every page load
     let solved = false;
@@ -376,22 +381,25 @@
 
     // --- Fragment submission ---
 
-    const CORRECT_FRAG = 'NODE';
+    // SHA-256 of the decoded fragment (NODE) — plaintext kept out of source
+    const ANSWER_HASH = 'fef2ec95d68cff5c7384857cd7dd003d87b044f76da5754f73219dab4e3fd194';
 
-    // Validate decoded fragment and unlock next room if correct
+    // Validate decoded fragment and unlock next room if correct (hash compare)
     function checkFragment() {
       const val = document.getElementById('frag-input').value.trim().toUpperCase();
       const err = document.getElementById('err-msg');
       const ok  = document.getElementById('ok-msg');
       const box = document.getElementById('frag-box');
 
-      if (val === CORRECT_FRAG) {
-        showSolved();
-      } else {
-        show(err);
-        hide(ok);
-        box.classList.remove('show');
-      }
+      sha256(val).then(h => {
+        if (h === ANSWER_HASH) {
+          showSolved();
+        } else {
+          show(err);
+          hide(ok);
+          box.classList.remove('show');
+        }
+      });
     }
 
     // Show success state and reveal next-room link

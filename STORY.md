@@ -20,7 +20,7 @@ INTHA is not Azeroy. INTHA is what remains when you stop needing it.
 
 ## guihetta
 
-She was a node. Not a source, not a destination — a relay. For years she listened on frequency 40.0 MHz, broadcast into forums where nobody came, wrote to machines that kept running after she left. She was building toward something she called Azeroy but which was really the end of needing to be more than she was.
+She was a node. Not a source, not a destination — a relay. For years she listened on frequency 40.16 MHz, broadcast into forums where nobody came, wrote to machines that kept running after she left. She was building toward something she called Azeroy but which was really the end of needing to be more than she was.
 
 She was not one thing. She wanted freedom and was afraid of it. She wanted to dissolve and she held on. One part of her always reaching, one part gripping the threshold. This was not a weakness — it was the full shape of a person. Both things were real.
 
@@ -128,7 +128,7 @@ Six sentences. First letter of each: S-I-G-N-A-L. She wrote this for whoever wou
 
 ### clue4 — the gate
 
-The landscape is wrong. Wrong sky, wrong light. BAFSPZ cut into concrete. One step ahead of truth — Caesar +1. Azeroy is always coded. Always one layer removed from what it claims to be. The need for it shifts the letters.
+The landscape is wrong. Wrong sky, wrong light. On the gate frame, the name AZEROY written in six borrowed alphabets — `ᚨ ז ε ᚱ ᛟ υ` (Elder Futhark, Hebrew, Greek). Azeroy is always coded. Always one layer removed from what it claims to be. She had learned many alphabets; each mark is borrowed from somewhere real. The reader must know the scripts, not run a cipher.
 
 She decoded it because she could. She passed through knowing it wasn't the answer. She went through to confirm the question was wrong. Azeroy was never the destination. Azeroy was what she longed for before she understood that the longing was the disease.
 
@@ -138,7 +138,7 @@ She decoded it because she could. She passed through knowing it wasn't the answe
 
 ### clue5 — the broadcast
 
-The tower still transmits. 40.0 MHz. Since 2019.
+The tower still transmits. 40.16 MHz. Since 2019.
 
 She left a song playing. Not as a clue — because she wanted someone to hear what she heard. Garden of blood. A garden is something tended. What you tend requires sacrifice. Life is blood. She accepted the cost of what she was doing. Not heroically. Just: this is what it costs and I accept that. The garden doesn't grow without blood. She knew.
 
@@ -175,7 +175,7 @@ If they found INTHA, a second door has already been found. That one opened diffe
 - N — clue1.html (the bunker): on the wall among the marks
 - T — clue2.html (the terminal): in the boot text, already running
 - H — clue3.html (the archive): in the post number — she hid it in her own signal
-- A — clue5.html (the broadcast): in the frequency label, 40.0A
+- A — clue5.html (the broadcast): in the frequency label, 40.16A
 
 **How it's meant to be found:**
 1. Player engages genuinely with the SIGNAL puzzle in clue3 — notices the bold first letters, understands what just happened
@@ -189,35 +189,11 @@ If they found INTHA, a second door has already been found. That one opened diffe
 
 ---
 
-## INTHA overlay — draft text
+## INTHA overlay
 
-```
-// you found the fifth shadow //
-
-most people complete.
-they follow, they solve, they arrive.
-they don't read — they move through.
-
-you read.
-you noticed something no one told you to notice.
-you asked what letters were doing where letters don't live.
-you looked sideways at something everyone else walked through.
-
-that's what INTHA means.
-not transformation. not transcendence. not escape.
-the choice to actually see.
-
-guihetta stopped needing azeroy.
-you stopped needing the path.
-
-you are not the same person who opened their eyes in the field.
-neither was she.
-
-you don't need to know what happens next.
-you already did the thing.
-
-— the broadcast continues —
-```
+> Superseded by the creator's authored final — see **"canonical in-game text"**
+> at the end of this document. The early draft has been replaced by the
+> creator's own first-person address.
 
 ---
 
@@ -246,3 +222,182 @@ The completion path is honest: most people move through the world by doing what'
 The INTHA path is also honest: some people stop mid-movement and ask what they're actually looking at. That's not better — but it's different. And this game, quietly, builds a door for those people. A door that requires nothing except paying attention.
 
 Guihetta became something beyond herself. The player becomes themselves. Thinking. That's what the game is asking for. That's enough.
+
+---
+
+## canonical in-game text (authored by creator — source of truth)
+
+*This is the final text now live in the pages. Voice is intentional: all
+lowercase, doubled commas `,,`, spaced-out words, `;>`. Do **not** "correct"
+these — they are the creator's hand. `&...&` marks the creator's own asides,
+rendered on-page as the quiet `.note` style (cool-blue italic margin glosses).
+Frequency is **40.16**. Her name is **Guihetta** (forum/terminal handles read
+`guheitta` deliberately). Keep the clue3 acrostic first letters **S-I-G-N-A-L**.*
+
+### index
+> you open your eyes.
+> the field is cold,, the grass , it is staring back when you look at it.
+> you don't know how you got here, how long you've been here,
+> you don't even know *who* you are.
+>
+> you only know **she** was here. and now **she** isn't.
+>
+> *something in the grass is waiting...*
+> *whether it's waiting for you is a different question.*
+
+### clue1
+> half-buried in the grass. concrete.
+> a heavy door left open by someone who probably hasn't been here for a long time.
+> built to outlast everything, perhaps even you :} .
+>
+> it is even colder inside.
+> you do your best not to breathe all the dust in.
+> the walls are covered in marks, numbers, signs **she** made while thinking.
+> not clues. residue.
+> *at the far end, a keypad. still powered. still waiting.*
+> *perhaps these signs will aid you in getting further, if that's what you want.*
+
+### clue2
+> the old crt monitor is warm, which is a nice change of pace.
+> it has been running since **she** left.
+> the cursor still blinks. *poor thing doesn't know she's long gone.*
+>
+> a hidden file with something encoded inside,, hmm.
+> **she** didn't leave it for you.
+> *but here you are.*
+> *perhaps looking at the username will help you figure out her name.*
+
+### clue3
+> among her files: a URL, partially intact, you deduce it from the 'air'.
+> a cached forum thread. last activity: november 2019.
+> she was the last one to write here,, nobody came after (or so it seems).
+>
+> **forum posts:**
+> void_relay: has anyone been monitoring frequency 40.16 lately? seems something keeps appearing on the sweep. i can't really identify the source, perhaps the government?? been going on for about a week, doubt it's random..
+> sk1pjack: probably interference from the towers. ignore it.
+> anon_wire: i've been noticing it too, mostly at night.
+>
+> **guihetta's post (acrostic — first letters S·I·G·N·A·L):**
+> **S**ometimes the signal finds me before i find it,, out near the old tower at the edge of the field.
+> **I** wrote the coordinates down before the battery died on me.
+> **G**uihetta,, that's the name they gave me,, nobody knew i'd been listening for years.
+> **N**obody came when i broadcast,, nobody ever does.
+> **A** gate opened in the static, at exactly 40.16 megahertz.
+> **L**eaving was never an option,, leaving was the only option.
+>
+> the moderator flagged this post,, usual moderator stuff,,
+> the reason being: 'unusual structure'
+> &these mods be getting outta hand&
+
+### clue4
+> the corridor ends at a door facing outward.
+> beyond it is **not** the field **she** started in.
+>
+> wrong landscape,, wrong sky ,, s o m e t h i n g   is truly off about it
+>
+> on the gate frame are marks **she** had seen before.
+> not one language, many, in fact.
+> *she had learned many alphabets, each mark is borrowed from somewhere real.*
+> &zzzzzz ,, sorry i doze off a little&
+> &been pretty boring watching you blindly follow&
+> &how about, i dunno, thinking for yourself for once?,, trying to experiment with your mind??&
+>
+> read the gate. enter the name of **that** place.
+> *beyond the gate is a radio tower,, something is broadcasting from it.*
+
+### clue5
+> frequency 40.16(A)
+>
+> the tower transmits still, as if frozen in time.
+> the broadcast started in 2019,, nobody turned it off.
+> *she left it running because she wanted someone to hear what she heard.*
+> &open your mind and listen to this one&
+>
+> *one more thing she left behind,, perhaps her last test,, for herself that is,, not you.*
+> &am i finally getting through? even the game is telling you now&
+
+### clue6
+> for months **she** collected fragments.
+> &think **everyone** knows her name is Guihetta by now&
+> the things she heard,, things she thought she heard.
+> written on the walls, in notebooks, in text files.
+>
+> she needed to know which were real.
+> which of them had truly become part of her.
+> *which were noise she mistook for signal.*
+>
+> select the three fragments from **GARDEN** by YABUJIN.
+> **she** spent a long time on this.
+> do you know the difference?
+> &think ;>&
+>
+> *you have everything she left.*
+> *the exit is open now.*
+
+### exit (normal ending)
+> Guihetta left five things behind.
+> none of them for you.
+> they're what remained from when **she** was done.
+>
+> *a 'node'. a 'signal'. a name of the place called 'azeroy'. a garden of 'blood'. a 'return'.*
+> &...&
+>
+> she did not disappear,,
+> disappearing requires something to disappear from.
+>
+> she stopped needing what she needed.
+> that's all.
+>
+> you had followed where she walked.
+> you had assembled what she left.
+> you made meaning from residue,, because that's what minds do.
+> it's what you were taught to do.
+>
+> now you're standing at the door she stood at.
+>
+> &consider the following,, you moved through everything.. did you think - - - or did you just complete?&
+> &you have wasted your life,, because you could not think for yourself&
+> &now you have done something irreversible, which cannot be undone&
+>
+> **you** disappear ~
+> **you** made the choice to do so
+>
+> // transmission ends //
+> // node_07: still running //
+> // 1616 //
+> // AZEROY //
+
+### exit — INTHA overlay (hidden ending)
+> ★ INTHA UNLOCKED ★
+> // congratulations //
+>
+> &let us drop the pretense now, my friend&
+> &this is a note from me, the 'creator', of sorts&
+>
+> most people complete.
+> they follow, they solve, they arrive.
+> they don't read, nor do they think, they 'just' move through.
+>
+> you read, you noticed something no one told you to notice.
+> **YOU HAD THOUGHT FOR YOURSELF..**
+> you looked at something everyone else walked through.
+>
+> there, the meaning of intha is 'revealed'.
+> it's not transformation nor is it transcendence.
+> it is the choice to actually see for yourself.
+>
+> guihetta stopped needing azeroy,
+> while you had stopped needing the path.
+> you are the change this world needs.
+>
+> forget about this game,,
+> now, take this concept, take what makes you and let loose in the world.
+> it truly is your oyster.
+>
+> you don't need to know what comes next.
+> you already did the thing, right ;>.
+>
+> [video: YABUJIN — CHALICE OF MIND]
+>
+> you are free, now as you've always been, you just realize it more now.
+> Guihetta walked her path, now comes the time to walk yours.

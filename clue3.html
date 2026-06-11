@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
 
     /* Outer forum chrome */
     #forum-wrap {
-      max-width: 780px;
+      max-width: 100%;
       margin: 0 auto;
       background: #09080d;
       border: 1px solid #151220;
@@ -169,15 +169,18 @@
 
   <div class="wrap">
 
-    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+    <div class="nav">
+      <a class="back-btn" href="clue2.html">← one step back</a>
+      <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">return to field →</a>
+    </div>
 
     <h1>// archive_03 //</h1>
 
     <!-- Story text -->
     <p>
-      among her files: a URL, partially intact.<br>
+      among her files: a URL, partially intact, you deduce it from the 'air'.<br>
       a cached forum thread. last activity: november 2019.<br>
-      <em>she was the last one to write there. nobody came after.</em>
+      she was the last one to write here,, nobody came after (or so it seems).
     </p>
 
     <!-- Forum widget -->
@@ -212,9 +215,9 @@
           <!-- INTHA letter H hidden in post number -->
           <div class="post-date">2019-11-20 · post #<span class="intha-h" aria-hidden="true">H</span>1188</div>
           <div class="post-text">
-            <p>has anyone been monitoring frequency 40.0 lately.</p>
-            <p>something keeps appearing on the sweep. can't identify the source.</p>
-            <p>been going on for about a week. not random.</p>
+            <p>has anyone been monitoring frequency 40.16 lately?</p>
+            <p>seems something keeps appearing on the sweep. i can't really identify the source, perhaps the government??</p>
+            <p>been going on for about a week, doubt it's random..</p>
           </div>
         </div>
       </div>
@@ -239,7 +242,7 @@
           <div class="user-info">posts: 313<br>joined: 2016</div>
         </div>
         <div class="post-body">
-          <span>i've been noticing it too. mostly at 3am.</span>
+          <span>i've been noticing it too, mostly at night.</span>
         </div>
       </div>
 
@@ -265,13 +268,13 @@
           </div>
 
           <!-- Acrostic: first letters spell S-I-G-N-A-L -->
-          <div class="post-text" aria-label="guihetta's post — first letters speak">
-            <p><strong>S</strong>he found the signal near the old tower at the edge of the field.</p>
-            <p><strong>I</strong> wrote the coordinates down before the battery died.</p>
-            <p><strong>G</strong>uihetta, they called her — nobody knew she had been listening for years.</p>
-            <p><strong>N</strong>obody came when she broadcast. nobody ever comes.</p>
-            <p><strong>A</strong> gate appeared in the static at exactly 40.0 megahertz.</p>
-            <p><strong>L</strong>eaving was not an option. leaving was the only option.</p>
+          <div class="post-text" aria-label="guihetta's post">
+            <p><strong>S</strong>ometimes the signal finds me before i find it,, out near the old tower at the edge of the field.</p>
+            <p><strong>I</strong> wrote the coordinates down before the battery died on me.</p>
+            <p><strong>G</strong>uihetta,, that's the name they gave me,, nobody knew i'd been listening for years.</p>
+            <p><strong>N</strong>obody came when i broadcast,, nobody ever does.</p>
+            <p><strong>A</strong> gate opened in the static, at exactly 40.16 megahertz.</p>
+            <p><strong>L</strong>eaving was never an option,, leaving was the only option.</p>
           </div>
         </div>
       </div>
@@ -300,10 +303,10 @@
     <div style="margin-top: 40px;">
       <h2>// what did she hide in this post? //</h2>
       <p>
-        the moderator flagged this post.<br>
-        reason: unusual structure.<br>
-        <em>what did she hide in plain sight?</em>
+        the moderator flagged this post,, usual moderator stuff,,<br>
+        the reason being: 'unusual structure'
       </p>
+      <span class="note">these mods be getting outta hand</span>
 
       <div class="row" style="margin-top: 14px;">
         <input type="text" id="frag-input" placeholder="the hidden word" maxlength="20">
@@ -327,26 +330,30 @@
   </div><!-- /.wrap -->
 
 
+  <script src="sha.js"></script>
   <script>
     // In-memory solved state — resets on every page load
     let solved = false;
 
-    const CORRECT = 'SIGNAL';
+    // SHA-256 of the acrostic answer (SIGNAL) — plaintext kept out of source
+    const ANSWER_HASH = '8e1a5272bdd1d3e31686395747952c2384871c7f71f73dc660dcd0999f934582';
 
-    // Validate acrostic answer and unlock next room if correct
+    // Validate acrostic answer and unlock next room if correct (hash compare)
     function checkFragment() {
       const val = document.getElementById('frag-input').value.trim().toUpperCase();
       const err = document.getElementById('err-msg');
       const ok  = document.getElementById('ok-msg');
       const box = document.getElementById('frag-box');
 
-      if (val === CORRECT) {
-        showSolved();
-      } else {
-        show(err);
-        hide(ok);
-        box.classList.remove('show');
-      }
+      sha256(val).then(h => {
+        if (h === ANSWER_HASH) {
+          showSolved();
+        } else {
+          show(err);
+          hide(ok);
+          box.classList.remove('show');
+        }
+      });
     }
 
     // Show success state and reveal next-room link

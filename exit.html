@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -124,30 +124,83 @@
       z-index: 9998;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      /* safe center: stays centred when it fits, aligns to top when content is
+         taller than the viewport — combined with overflow-y so it can scroll */
+      justify-content: safe center;
+      overflow-y: auto;
       text-align: center;
-      padding: 40px;
+      padding: clamp(24px, 5vh, 48px) clamp(16px, 4vw, 40px);
     }
     #easter.show { display: flex; }
 
+    /* All easter content centred in a constrained column */
     #easter p {
-      color: #6a5880; font-size: 0.82rem;
+      color: #8676a0; font-size: 0.82rem;
       letter-spacing: 0.2em; line-height: 2.2;
-      max-width: 48ch; margin-bottom: 28px;
+      max-width: 52ch; margin: 0 auto 24px;
+      text-align: center;
     }
+
+    /* YABUJIN logo — black-on-transparent PNG inverted to a glowing white seal,
+       gently floating. Reads as an "achievement medal". */
+    .easter-logo {
+      width: clamp(96px, 15vw, 168px);
+      margin: 0 auto 18px;
+      filter: invert(1) drop-shadow(0 0 16px rgba(150,120,255,0.6))
+              drop-shadow(0 0 4px rgba(120,200,255,0.5));
+      animation: floaty 5s ease-in-out infinite;
+    }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-9px); }
+    }
+
+    /* Holographic achievement banner — shifting Y2K chrome gradient text */
+    .achv {
+      font-size: clamp(0.85rem, 3.4vw, 1.5rem);
+      letter-spacing: 0.35em;
+      font-weight: normal;
+      background: linear-gradient(90deg,#7cd0ff,#c79bff,#ffd28a,#7cffd0,#7cd0ff);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      animation: holo 6s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes holo { to { background-position: 300% 0; } }
 
     .easter-title {
-      font-size: 0.65rem; color: #2a2038;
-      letter-spacing: 0.5em; margin-bottom: 32px;
+      font-size: 0.62rem; color: #4a3a60;
+      letter-spacing: 0.5em; margin: 0 auto 30px;
     }
 
-    /* Responsive 16:9 video wrapper inside easter egg */
+    /* Celebratory anime art — chrome/neon bezel, holographic border, deep glow */
+    .easter-art {
+      display: block;
+      width: min(82vw, 460px);
+      margin: 6px auto 30px;
+      border: 3px solid transparent;
+      border-image: linear-gradient(135deg,#8ad0ff,#c79bff,#ffd28a,#8affd0) 1;
+      box-shadow: 0 0 34px rgba(150,120,255,0.4),
+                  inset 0 0 28px rgba(0,0,0,0.65);
+      image-rendering: auto;
+    }
+    .easter-art-cap {
+      font-size: 0.58rem; color: #4a3a60;
+      letter-spacing: 0.3em; margin: -20px auto 30px;
+    }
+
+    /* Responsive 16:9 video wrapper inside easter egg — larger, centred */
     #easter-video-outer {
-      width: 560px; max-width: 100%; margin-bottom: 28px;
+      width: min(92vw, 880px); max-width: 100%;
+      margin: 0 auto 28px;
     }
     #easter-video-wrap {
       position: relative; width: 100%; padding-top: 56.25%;
-      background: #000; border: 1px solid #1a1028;
+      background: #000;
+      border: 1px solid transparent;
+      border-image: linear-gradient(135deg,#5a7ad0,#9b6ad0,#5ad0c0) 1;
+      box-shadow: 0 0 26px rgba(120,100,220,0.3);
     }
     #easter-video-wrap iframe {
       position: absolute; top: 0; left: 0;
@@ -156,12 +209,12 @@
 
     /* Direct link fallback if video doesn't autoplay */
     .easter-fallback {
-      font-size: 0.65rem; color: #2a1e38;
-      margin-bottom: 12px; letter-spacing: 0.1em;
+      font-size: 0.65rem; color: #4a3a60;
+      margin-bottom: 14px; letter-spacing: 0.1em;
     }
-    .easter-fallback a { color: #3a2a4a; }
+    .easter-fallback a { color: #8a7ad0; }
 
-    .close-hint { font-size: 0.6rem; color: #1e1828; letter-spacing: 0.2em; }
+    .close-hint { font-size: 0.6rem; color: #2e2840; letter-spacing: 0.2em; }
   </style>
 </head>
 
@@ -185,7 +238,10 @@
 
   <div class="wrap">
 
-    <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">← return to field</a>
+    <div class="nav">
+      <a class="back-btn" href="clue6.html">← one step back</a>
+      <a class="back-btn" href="index.html" title="Návrat na úvodní stránku">return to field →</a>
+    </div>
 
     <!-- Decorative status bar -->
     <div class="status-bar">
@@ -198,13 +254,14 @@
 
     <!-- Story text -->
     <p>
-      she left five things.<br>
-      she didn't leave them for you.<br>
-      they're what remained when she was done.
+      Guihetta left five things behind.<br>
+      none of them for you.<br>
+      they're what remained from when <strong>she</strong> was done.
     </p>
     <p>
-      <em>a node. a signal. a name. a garden. a return.</em>
+      <em>a 'node'. a 'signal'. a name of the place called 'azeroy'. a garden of 'blood'. a 'return'.</em>
     </p>
+    <span class="note">...</span>
     <span id="hint-dot" title="five shadows crossed this room"></span>
 
     <!-- Fragment input grid: one field per collected fragment -->
@@ -235,7 +292,7 @@
       <h2>// what happened to guihetta //</h2>
 
       <p>
-        she did not disappear.<br>
+        she did not disappear,,<br>
         disappearing requires something to disappear from.
       </p>
 
@@ -245,15 +302,24 @@
       </p>
 
       <p>
-        you followed where she walked.<br>
-        you assembled what she left.<br>
-        you made meaning from residue — because that's what minds do.
+        you had followed where she walked.<br>
+        you had assembled what she left.<br>
+        you made meaning from residue,, because that's what minds do.<br>
+        it's what you were taught to do.
       </p>
 
       <p>
-        now you're standing at the door she stood at.<br><br>
-        <strong>consider: you moved through everything.<br>
-        did you think — or did you complete?</strong>
+        now you're standing at the door she stood at.
+      </p>
+
+      <span class="note">consider the following,, you moved through everything..<br>
+        did you think - - - or did you just complete?</span>
+      <span class="note">you have wasted your life,, because you could not think for yourself</span>
+      <span class="note">now you have done something irreversible, which cannot be undone</span>
+
+      <p>
+        <strong>you</strong> disappear ~<br>
+        <strong>you</strong> made the choice to do so
       </p>
 
       <div class="end-line">
@@ -269,40 +335,56 @@
   <!-- Easter egg overlay — typing INTHA triggers this -->
   <div id="easter" role="dialog" aria-label="hidden ending" aria-hidden="true">
 
-    <div class="easter-title">// you found the fifth shadow //</div>
+    <!-- YABUJIN logo as a glowing achievement seal -->
+    <img class="easter-logo" src="yabujin-logo.png" alt="YABUJIN">
+
+    <!-- Holographic achievement banner -->
+    <div class="achv">★ INTHA UNLOCKED ★</div>
+
+    <div class="easter-title">// congratulations //</div>
+
+    <span class="note">let us drop the pretense now, my friend<br>
+      this is a note from me, the 'creator', of sorts</span>
 
     <p>
       most people complete.<br>
       they follow, they solve, they arrive.<br>
-      they don't read — they move through.
+      they don't read, nor do they think, they 'just' move through.
     </p>
 
     <p>
-      you read.<br>
-      you noticed something no one told you to notice.<br>
-      you looked sideways at something everyone else walked through.
+      you read, you noticed something no one told you to notice.<br>
+      <strong>YOU HAD THOUGHT FOR YOURSELF..</strong><br>
+      you looked at something everyone else walked through.
     </p>
 
     <p>
-      that's what INTHA means.<br>
-      not transformation. not transcendence.<br>
-      the choice to actually see.
+      there, the meaning of intha is 'revealed'.<br>
+      it's not transformation nor is it transcendence.<br>
+      it is the choice to actually see for yourself.
     </p>
 
     <p>
-      guihetta stopped needing azeroy.<br>
-      you stopped needing the path.
+      guihetta stopped needing azeroy,<br>
+      while you had stopped needing the path.<br>
+      you are the change this world needs.
     </p>
 
     <p>
-      you are not the same person who opened their eyes in the field.<br>
-      neither was she.
+      forget about this game,,<br>
+      now, take this concept, take what makes you and let loose in the world.<br>
+      it truly is your oyster.
     </p>
 
     <p>
       you don't need to know what comes next.<br>
-      you already did the thing.
+      you already did the thing, right ;&gt;.
     </p>
+
+    <!-- Celebratory anime art — framed reward -->
+    <img class="easter-art" src="intha-anime.jpg" loading="lazy"
+         alt="two figures bathed in violet and green light — the garden of azeroy">
+    <div class="easter-art-cap">// garden of azeroy · 8888 //</div>
 
     <!-- YABUJIN — CHALICE OF MIND
          src left empty until triggered — avoids preloading
@@ -326,8 +408,8 @@
     </p>
 
     <p>
-      you are free now.<br>
-      guihetta was just the beginning.
+      you are free, now as you've always been, you just realize it more now.<br>
+      Guihetta walked her path, now comes the time to walk yours.
     </p>
 
     <div class="close-hint">[ press escape to close ]</div>
@@ -335,28 +417,37 @@
   </div>
 
 
+  <script src="sha.js"></script>
   <script>
     // In-memory solved state — resets on every page load
     let solved = false;
 
-    // Correct fragment answers mapped to input IDs
-    const ANSWERS = { f1: 'NODE', f2: 'SIGNAL', f3: 'AZEROY', f4: 'BLOOD', f5: 'RETURN' };
+    // SHA-256 of each correct fragment (NODE/SIGNAL/AZEROY/BLOOD/RETURN),
+    // mapped to input IDs. Plaintext answers kept out of source.
+    const ANSWER_HASHES = {
+      f1: 'fef2ec95d68cff5c7384857cd7dd003d87b044f76da5754f73219dab4e3fd194',
+      f2: '8e1a5272bdd1d3e31686395747952c2384871c7f71f73dc660dcd0999f934582',
+      f3: '9cb1602c0738f88ebf8e1bd3ffaab7aeebd92035767a55ec3f6752f6c5d2ef40',
+      f4: 'c9f5b99404f021accad355bad0616dbfceea068ad79fd5f0228653219724a774',
+      f5: 'c3172d0be78cf7a468dab757679cd7754364b8701cc444ab1d3dfbc704d7b4ed',
+    };
 
     // --- Fragment validation ---
-    // Check all five inputs; mark each correct/wrong; reveal epilogue if all correct
+    // Hash each input; mark each correct/wrong; reveal epilogue if all correct.
 
-    function checkFragments() {
+    async function checkFragments() {
       let allOk = true;
 
-      Object.entries(ANSWERS).forEach(([id, ans]) => {
+      for (const [id, hash] of Object.entries(ANSWER_HASHES)) {
         const el = document.getElementById(id);
-        if (el.value.trim().toUpperCase() === ans) {
+        const h  = await sha256(el.value.trim().toUpperCase());
+        if (h === hash) {
           el.classList.add('ok');
         } else {
           el.classList.remove('ok');
           allOk = false;
         }
-      });
+      }
 
       if (allOk) {
         hide('err-msg');
@@ -371,7 +462,7 @@
       solved = true;
       sessionStorage.setItem('sx', '1');
       hide('err-msg');
-      Object.keys(ANSWERS).forEach(id => document.getElementById(id).classList.add('ok'));
+      Object.keys(ANSWER_HASHES).forEach(id => document.getElementById(id).classList.add('ok'));
       document.getElementById('epilogue').style.display = 'block';
       document.body.classList.add('revealed');
     }
@@ -379,8 +470,8 @@
     function show(id) { document.getElementById(id).classList.add('show'); }
     function hide(id) { document.getElementById(id).classList.remove('show'); }
 
+    // Restore solved state within the same tab session (no plaintext needed)
     if (sessionStorage.getItem('sx')) {
-      Object.entries(ANSWERS).forEach(([id, val]) => { document.getElementById(id).value = val; });
       showEpilogue();
     }
 
